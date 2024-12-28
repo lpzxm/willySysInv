@@ -1,3 +1,10 @@
+<?php
+if (isset($_SESSION['user_id'])) {
+    // redirigir a la vista ya autorizada mediante la sesion
+    echo "<script>window.location.href = 'http://localhost/?view=main';</script>";
+}
+?>
+
 <style>
     body {
         background-color: #f4f7fc;
@@ -54,27 +61,57 @@
     }
 </style>
 
-
+<?php var_dump($_SESSION['user_id']) ; ?>
 <div class="login-container">
     <div class="login-card">
         <h3 class="text-center">Iniciar Sesión</h3>
-        <form action="login.php" method="POST">
-            <!-- Correo electrónico -->
-            <div class="form-group">
-                <label for="email">Correo electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Introduce tu correo" required>
-            </div>
-            <!-- Contraseña -->
-            <div class="form-group">
-                <label for="password">Contraseña</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Introduce tu contraseña" required>
-            </div>
-            <!-- Botón de login -->
-            <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
-        </form>
+
+        <!-- Correo electrónico -->
+        <div class="form-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Introduce tu correo" required>
+        </div>
+        <!-- Contraseña -->
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Introduce tu contraseña" required>
+        </div>
+        <!-- Botón de login -->
+        <button type="submit" class="btn btn-primary btn-block" id="logginBtn">Iniciar sesión</button>
+
 
         <div class="forgot-password">
             <a href="#">¿Olvidaste tu contraseña?</a>
         </div>
     </div>
 </div>
+
+<script>
+    $('#logginBtn').click(function() {
+        let email = $("#email").val();
+        let password = $("#password").val();
+
+        $.post("config/modules.php", {
+            process: "login",
+            action: "login",
+
+            email: email,
+            password: password
+        }, function(response) {
+            if (response == 1) {
+                window.location.href = "http://localhost/?view=main";
+            } else {
+                $.toast({
+                    heading: 'Advertencia',
+                    text: 'El usuario o contraseña ingresados son incorrectos',
+                    showHideTransition: 'slide',
+                    icon: 'warning',
+                    textColor: 'white',
+                    hideAfter: 5000,
+                    bgColor: '#B80000',
+                    position: 'top-center'
+                });
+            }
+        })
+    })
+</script>

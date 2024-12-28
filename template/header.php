@@ -2,6 +2,7 @@
     /* Personalización de estilos */
     .navbar {
         background-color: #007bff;
+        padding: 20px;
     }
 
     .navbar-brand {
@@ -37,7 +38,7 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div class="collapse navbar-collapse" id="navbarNav" style="margin-right: 5vh;">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item active">
                 <a class="nav-link" href="#">Inicio</a>
@@ -55,7 +56,7 @@
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" href="#">Perfil</a></li>
                     <li><a class="dropdown-item" href="#">Configuración</a></li>
-                    <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
+                    <li><a class="dropdown-item" href="../config/process/logout.php">Cerrar sesión</a></li>
                 </ul>
             </li>
         </ul>

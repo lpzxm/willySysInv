@@ -1,6 +1,6 @@
 <?php
 //conexion a la base de datos con PDO
-$host = 'localhost'; 
+$host = 'localhost';
 $dbname = 'willy_db';
 $username = 'root';
 $password = '';
@@ -12,4 +12,3 @@ try {
 } catch (PDOException $e) {
     echo "Error de conexión: " . $e->getMessage();
 }
-?>

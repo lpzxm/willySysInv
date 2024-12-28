@@ -57,7 +57,7 @@
             <!-- Columna de Información -->
             <div class="col-lg-4 col-md-6 mb-4">
                 <h5>Sistema de Inventario</h5>
-                <p>Gestiona y organiza el inventario de tu empresa de forma rápida y eficiente. Fácil acceso para administradores y empleados autorizados.</p>
+                <p>Gestiona y organiza el inventario de forma rápida y eficiente. Fácil acceso para administradores y empleados autorizados.</p>
             </div>
 
             <!-- Columna de Enlaces -->
@@ -66,17 +66,7 @@
                 <ul class="list-unstyled">
                     <li><a href="#">Inicio</a></li>
                     <li><a href="#">Productos</a></li>
-                    <li><a href="#">Servicios</a></li>
-                    <li><a href="#">Contacto</a></li>
                 </ul>
-            </div>
-
-            <!-- Columna de Redes Sociales -->
-            <div class="col-lg-4 col-md-6 mb-4 social-icons">
-                <h5>Síguenos</h5>
-                <a href="#" class="fab fa-facebook-f"></a>
-                <a href="#" class="fab fa-twitter"></a>
-                <a href="#" class="fab fa-instagram"></a>
             </div>
         </div>
 
@@ -84,6 +74,6 @@
         <hr class="my-4">
 
         <!-- Copyright -->
-        <p>&copy; <?php echo date('Y'); ?> Sistema de Inventario. Todos los derechos reservados.</p>
+        <p>&copy; <?php echo date('Y'); ?> Sistema de Inventario Willy's. Todos los derechos reservados.</p>
     </div>
 </footer>
