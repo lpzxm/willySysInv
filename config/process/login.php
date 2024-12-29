@@ -6,7 +6,7 @@ if ($action == 'login') {
 
     try {
         // Preparar la consulta para obtener el usuario
-        $query = "SELECT * FROM employee WHERE email = :n1 LIMIT 1";
+        $query = "SELECT * FROM employee WHERE email = :n1 AND status = 1 LIMIT 1";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(':n1', $username, PDO::PARAM_STR);
         $stmt->execute();

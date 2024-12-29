@@ -8,6 +8,7 @@ include("./config/net.php");
 </head>
 <body>
     <?php
+    session_start();
     include("./template/header.php");
     include("./config/router.php");
     include("./template/footer.php");

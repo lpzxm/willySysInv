@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="addUserModalLabel">Agregar Usuario</h5>
+                <h5 class="modal-title" id="addUserModalLabel">Agregar Nuevo Empleado</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalNewEmployee"></button>
             </div>
             <form>
@@ -88,7 +88,7 @@
         const fields = [{
                 id: "#firstName",
             },
-            
+
             {
                 id: "#firstLastName",
             },
@@ -186,8 +186,10 @@
                         hideAfter: 4000,
                         position: 'bottom-center'
                     });
+                    $("#nuevoEmpleadoRegistro").show();
+                    $("#successNewEmployee").hide();
                     $("#closeModalNewEmployee").click();
-                    $(".table-responsive").load("../../tables/employee/table.employee.admin.php")
+                    $(".table-responsive").load("../../../layout/tables/employee/table.employee.admin.php");
                 } else {
                     console.error("Error: " + response);
                 }
@@ -197,8 +199,7 @@
             }
         });
 
-
-
+        //pa debuguear xd
         // let firstName = $("#firstName").val();
         // let secondName = $("#secondName").val();
         // let firstLastName = $("#firstLastName").val();

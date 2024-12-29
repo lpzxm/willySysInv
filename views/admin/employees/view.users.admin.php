@@ -1,17 +1,3 @@
-<?php
-
-try {
-    // Consulta a la base de datos
-    $queryEmpleados = "SELECT * FROM employee";
-    $stmtEmpleados = $pdo->prepare($queryEmpleados);
-    $stmtEmpleados->execute();
-    $empleados = $stmtEmpleados->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    echo "Error: " . $e->getMessage();
-}
-
-?>
-
 <!-- DataTables -->
 <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/r-2.5.0/datatables.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
@@ -29,18 +15,17 @@ try {
     </div>
 
     <!-- Tabla de usuarios -->
-    <div class="table-responsive">
-        <?php
-        include("./layout/tables/employee/table.employee.admin.php");
-        ?>
-    </div>
+    <div class="table-responsive"></div>
 </div>
 
 <?php include("./layout/modal/gestionarEmpleados/modal.newEmployee.admin.php"); ?>
 <?php include("./layout/modal/gestionarEmpleados/modal.changePasswordEmployee.admin.php"); ?>
+<?php include("./layout/modal/gestionarEmpleados/modal.changeStatusEmployee.admin.php"); ?>
+<?php include("./layout/modal/gestionarEmpleados/modal.editInfoEmployee.admin.php"); ?>
 
 <script>
     $(document).ready(function() {
-        $('#tablaEmpleadosData').DataTable();
+        $('.table-responsive').load("../../../layout/tables/employee/table.employee.admin.php");
+        
     })
 </script>

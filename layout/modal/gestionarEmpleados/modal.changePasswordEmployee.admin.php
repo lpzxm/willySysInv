@@ -44,6 +44,9 @@
                     newEditPassword: $("#newPassword").val()
                 },
                 function(response) {
+                    $("#submitPasswordChange").show();
+                    $("#successChangePassword").hide();
+                    newEditPassword: $("#newPassword").val("");
                     $.toast({
                         heading: 'Finalizado',
                         text: 'Contraseña Editada con exito!',
