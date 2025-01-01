@@ -12,13 +12,11 @@ if ($view == '') {
 } else if ($view == 'main/gestionarUsuarios' && $logged) {
     include("./views/admin/employees/view.users.admin.php");
 } else if ($view == 'main/gestionarProductos' && $logged) {
-    # code...
+    include("./views/admin/products/view.products.admin.php");
 } else if ($view == 'main/gestionarCategorias' && $logged) {
     include("./views/admin/categories/view.categories.admin.php");
-} else if ($view == 'main/gestionarUsuarios' && $logged) {
-    # code...
 } else if ($view == 'main/gestionarMarcas' && $logged) {
-    # code...
-} else if ($view == 'main/gestionarProveedores' && $logged) {
-    # code...
+    include("./views/admin/brands/view.brands.admin.php");
+} elseif ($view == 'main/estadisticasGenerales' && $logged) {
+    include("./views/view.statsGeneral.php");
 }

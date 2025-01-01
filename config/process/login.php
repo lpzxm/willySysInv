@@ -21,6 +21,7 @@ if ($action == 'login') {
                 session_start();
                 // Contraseña válida: iniciar sesión
                 $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['name1'] . " " . $user['name2'] . " " . $user['lastname1'] . " " . $user['lastname2'];
                 $_SESSION['email'] = $user['email'];
                 $_SESSION['status'] = $user['status'];
                 $_SESSION['type'] = $user['type'];
@@ -35,5 +36,4 @@ if ($action == 'login') {
         $error = "Error de conexión: " . $e->getMessage();
     }
 } else if ($action == 'logout') {
-    
 }

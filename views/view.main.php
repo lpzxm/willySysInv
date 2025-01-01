@@ -1,9 +1,4 @@
 <?php
-
-// if (isset($_SESSION['user_id'])) {
-//     // redirigir a la vista ya autorizada mediante la sesion
-//     echo "<script>window.location.href = 'http://localhost/?view=main';</script>";
-// }
 ?>
 
 <style>
@@ -24,8 +19,8 @@
 
 <div class="container mt-5">
     <?php echo $_SESSION['user_id']; ?>
-    <h2 class="text-center mb-4">Bienvenido al Panel Administrativo</h2>
-    <p class="text-center">Selecciona una acción para comenzar:</p>
+    <h2 class="text-center mb-4">Bienvenido al Panel Administrativo - <?= $_SESSION['user_name'] ?></h2>
+    <h5 class="text-center">Selecciona una acción para comenzar:</h5>
 
     <div class="row g-4">
         <!-- Gestión de Productos -->
@@ -37,7 +32,7 @@
                     </div>
                     <h5 class="card-title">Gestión de Productos</h5>
                     <p class="card-text">Agregar, editar y eliminar productos del inventario.</p>
-                    <a href="productos.php" class="btn btn-light">Acceder</a>
+                    <a href="?view=main/gestionarProductos" class="btn btn-light gsap-link">Acceder</a>
                 </div>
             </div>
         </div>
@@ -51,21 +46,21 @@
                     </div>
                     <h5 class="card-title">Gestión de Usuarios</h5>
                     <p class="card-text">Administrar usuarios autorizados del sistema.</p>
-                    <a href="?view=main/gestionarUsuarios" class="btn btn-light">Acceder</a>
+                    <a href="?view=main/gestionarUsuarios" class="btn btn-light gsap-link">Acceder</a>
                 </div>
             </div>
         </div>
 
-        <!-- Reportes -->
+        <!-- Solicitud -->
         <div class="col-lg-4 col-md-6">
             <div class="card bg-danger text-white text-center shadow">
                 <div class="card-body">
                     <div class="icon mb-3">
                         <i class="bi bi-bar-chart"></i>
                     </div>
-                    <h5 class="card-title">Solicitud de Nuevo Producto</h5>
-                    <p class="card-text">Generar reporte o solicitud para ingresar nuevo producto al inventario.</p>
-                    <a href="#" class="btn btn-light">Acceder</a>
+                    <h5 class="card-title">Estadisticas Generales</h5>
+                    <p class="card-text">Visualizar estadísticas principales y generales del sistema</p>
+                    <a href="?view=main/estadisticasGenerales" class="btn btn-warning">EN DESARROLLO</a>
                 </div>
             </div>
         </div>
@@ -79,7 +74,7 @@
                     </div>
                     <h5 class="card-title">Gestión de Categorías</h5>
                     <p class="card-text">Organizar productos en categorías.</p>
-                    <a href="?view=main/gestionarCategorias" class="btn btn-light">Acceder</a>
+                    <a href="?view=main/gestionarCategorias" class="btn btn-light gsap-link">Acceder</a>
                 </div>
             </div>
         </div>
@@ -93,7 +88,7 @@
                     </div>
                     <h5 class="card-title">Historial</h5>
                     <p class="card-text">Consultar el historial de movimientos.</p>
-                    <a href="#" class="btn btn-light">Acceder</a>
+                    <a href="#" class="btn btn-warning">EN DESARROLLO</a>
                 </div>
             </div>
         </div>
@@ -107,7 +102,7 @@
                     </div>
                     <h5 class="card-title">Gestion de Marcas</h5>
                     <p class="card-text">Gestiona o visualiza las marcas registradas dentro del sistema y sus productos.</p>
-                    <a href="?view=main/gestionarMarcas" class="btn btn-light">Acceder</a>
+                    <a href="?view=main/gestionarMarcas" class="btn btn-light gsap-link">Acceder</a>
                 </div>
             </div>
         </div>

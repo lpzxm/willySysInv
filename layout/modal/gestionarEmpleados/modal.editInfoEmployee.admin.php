@@ -46,7 +46,7 @@
                     <hr>
                     <br>
                     <div class="mb-3">
-                        <label for="userRole" class="form-label">Rol<span class="text-danger">(*)</span></label>
+                        <label for="userRole" class="form-label">Rol:<span class="text-danger">(*)</span></label>
                         <select class="form-select" id="editemployeeRole" required>
                             <option value="">Seleccione</option>
                             <option value="admin">Administrador</option>
@@ -67,6 +67,8 @@
 </div>
 
 <script>
+   
+
     $(document).on("click", ".editEmployeeBtn", function() {
         $("#editUserModal").modal('show');
         var button = $(this);
@@ -88,6 +90,7 @@
         $("#editbirthDay").val(birthday);
         $("#editstartDay").val(startday);
         $("#editemployeeRole").val(rol);
+        
 
         $("#editEmpleadoRegistro").off("click").on("click", function() {
             let hasErrors = false;

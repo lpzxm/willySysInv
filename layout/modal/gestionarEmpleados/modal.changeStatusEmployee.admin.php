@@ -43,6 +43,8 @@
                 },
                 function(response) {
                     $("#cambiarEstadoEmpleado").modal("hide");
+                    $("#confirmChangeStatusEmployee").show();
+                    $("#successChangeStatusEmployee").hide();
                     $.toast({
                         heading: 'Finalizado',
                         text: 'Empleado Actualizado',

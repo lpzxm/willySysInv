@@ -20,7 +20,7 @@ if (isset($_SESSION['user_id'])) {
 
     .login-card {
         background-color: #fff;
-        padding: 40px;
+        padding: 50px;
         border-radius: 8px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         max-width: 400px;
@@ -60,8 +60,6 @@ if (isset($_SESSION['user_id'])) {
         text-decoration: underline;
     }
 </style>
-
-<?php var_dump($_SESSION['user_id']) ; ?>
 <div class="login-container">
     <div class="login-card">
         <h3 class="text-center">Iniciar Sesión</h3>
@@ -69,7 +67,7 @@ if (isset($_SESSION['user_id'])) {
         <!-- Correo electrónico -->
         <div class="form-group">
             <label for="email">Correo electrónico</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Introduce tu correo" required>
+            <input type="email" class="form-control mb-2" id="email" name="email" placeholder="Introduce tu correo" required>
         </div>
         <!-- Contraseña -->
         <div class="form-group">
@@ -77,12 +75,7 @@ if (isset($_SESSION['user_id'])) {
             <input type="password" class="form-control" id="password" name="password" placeholder="Introduce tu contraseña" required>
         </div>
         <!-- Botón de login -->
-        <button type="submit" class="btn btn-primary btn-block" id="logginBtn">Iniciar sesión</button>
-
-
-        <div class="forgot-password">
-            <a href="#">¿Olvidaste tu contraseña?</a>
-        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-2" id="logginBtn">Iniciar sesión</button>
     </div>
 </div>
 
@@ -113,5 +106,5 @@ if (isset($_SESSION['user_id'])) {
                 });
             }
         })
-    })
+    });
 </script>

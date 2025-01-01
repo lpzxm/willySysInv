@@ -1,33 +1,39 @@
 <!-- Modal para agregar usuario -->
-<div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="addBrandModal" tabindex="-1" aria-labelledby="addBrandModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="addCategoryModalLabel">Agregar Nueva Categoria</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalNewCategory"></button>
+                <h5 class="modal-title" id="addBrandModalLabel">Agregar Nueva Marca</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalNewBrand"></button>
             </div>
             <form>
                 <div class="modal-body">
-                    <div class="mb-3">
+                    <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="nameCategory" class="form-label">Nombre <span class="text-danger">(*)</span></label>
-                            <input type="text" class="form-control" id="nameCategory" required>
+                            <label for="nameBrand" class="form-label">Nombre <span class="text-danger">(*)</span></label>
+                            <input type="text" class="form-control" id="nameBrand" required>
                         </div>
-
-                    </div>
-                    <div class="mb-3">
                         <div class="w-100">
-                            <label for="codeCategory" class="form-label">Código Inicial</label>
-                            <input type="text" class="form-control" id="codeCategory" required>
+                            <label for="categoryBrand" class="form-label">Categoria a la que pertenece:</label>
+                            <select class="form-select select-example" name="categoryBrand" id="categoryBrand" required>
+                                <option value="">Seleccione</option>
+                                <?php
+                                $queryCategories = "SELECT * FROM product_category WHERE status = 1;";
+                                $categoryList = $pdo->prepare($queryCategories);
+                                $categoryList->execute();
+                                while ($dataAL = $categoryList->fetch()) {
+                                    echo "<option value='$dataAL[0]'>$dataAL[1]- CODE: $dataAL[2]</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
                     </div>
-
                     <br>
                     <hr>
                     <br>
                     <div class="mb-3">
-                        <label for="statusCategory" class="form-label">Estado<span class="text-danger">(*)</span></label>
-                        <select class="form-select" id="statusCategory" required>
+                        <label for="statusBrand" class="form-label">Estado<span class="text-danger">(*)</span></label>
+                        <select class="form-select" id="statusBrand" required>
                             <option value="">Seleccione</option>
                             <option value="1">Activo</option>
                             <option value="0">Oculto</option>
@@ -36,8 +42,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-success" id="nuevaCategoriaRegistro">Guardar</button>
-                    <button type="button" class="btn btn-success" id="successNewCategory" style="display:none;" disabled><span
+                    <button type="button" class="btn btn-success" id="nuevaMarcaRegistro">Guardar</button>
+                    <button type="button" class="btn btn-success" id="successNewBrand" style="display:none;" disabled><span
                             class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Cargando...</button>
                 </div>
@@ -47,19 +53,25 @@
 </div>
 
 <script>
-    $("#nuevaCategoriaRegistro").click(function(e) {
+    const tomSelectInstance = new TomSelect(".select-example", {
+        allowEmptyOption: true,
+        create: false,
+        searchField: ['text'],
+    });
+
+    $("#nuevaMarcaRegistro").click(function(e) {
         e.preventDefault();
 
         let hasErrors = false;
         const fields = [{
-                id: "#nameCategory",
+                id: "#nameBrand",
             },
 
             {
-                id: "#codeCategory",
+                id: "#categoryBrand",
             },
             {
-                id: "#statusCategory",
+                id: "#statusBrand",
             }
         ];
 
@@ -71,21 +83,6 @@
                 $(field.id).removeClass("is-invalid");
             }
         });
-
-
-        //!!! esto me va a servir para restringir la cantidad de digitos en el codigo a solicitud de la empresa
-        // if ($("#numberDUI").val().length < 9) {
-        //     $.toast({
-        //         heading: 'Error',
-        //         text: 'El DUI debe presentar 9 numeros',
-        //         showHideTransition: 'slide',
-        //         icon: 'error',
-        //         hideAfter: 4000,
-        //         position: 'bottom-center'
-        //     });
-        //     $("#numberDUI").addClass("is-invalid");
-        //     hasErrors = true;
-        // }
 
         if (hasErrors) {
             $.toast({
@@ -100,14 +97,14 @@
         };
 
         //envio de datos mientras todo sea true
-        $("#nuevaCategoriaRegistro").hide();
-        $("#successNewCategory").show();
+        $("#nuevaMarcaRegistro").hide();
+        $("#successNewBrand").show();
         const formData = new FormData();
         formData.append("process", "inventario_process");
-        formData.append("action", "addNewCategory");
-        formData.append("name", $("#nameCategory").val());
-        formData.append("code", $("#codeCategory").val());
-        formData.append("status", $("#statusCategory").val());
+        formData.append("action", "addNewBrand");
+        formData.append("name", $("#nameBrand").val());
+        formData.append("idCategory", $("#categoryBrand").val());
+        formData.append("status", $("#statusBrand").val());
         $.ajax({
             url: "config/modules.php",
             type: "POST",
@@ -118,16 +115,16 @@
                 if (response == 1) {
                     $.toast({
                         heading: 'Finalizado',
-                        text: 'Categoria Registrada con Éxito!!',
+                        text: 'Marca Registrada con Éxito!!',
                         showHideTransition: 'slide',
                         icon: 'success',
                         hideAfter: 4000,
                         position: 'bottom-center'
                     });
-                    $("#nuevaCategoriaRegistro").show();
-                    $("#successNewCategory").hide();
-                    $("#closeModalNewCategory").click();
-                    $(".table-responsive").load("../../../layout/tables/categories/table.categories.admin.php");
+                    $("#nuevaMarcaRegistro").show();
+                    $("#successNewBrand").hide();
+                    $("#closeModalNewBrand").click();
+                    $(".table-responsive").load("../../../layout/tables/brands/table.brands.admin.php");
                 } else {
                     console.error("Error: " + response);
                 }
