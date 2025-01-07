@@ -26,6 +26,5 @@
 <script>
     $(document).ready(function() {
         $('.table-responsive').load("../../../layout/tables/employee/table.employee.admin.php");
-        
-    })
+    });
 </script>

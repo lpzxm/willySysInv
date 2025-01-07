@@ -1,4 +1,5 @@
 <style>
+
     /* Personalización de estilos */
     .navbar {
         background-color: #007bff;

@@ -22,6 +22,17 @@
 <!-- GSAP para transiciones entre rutas -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manjari:wght@100;400;700&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="../assets/icon_meta.png" type="image/x-icon">
 
 <title>Inventario Willy's - <?php echo date('Y') ?></title>
+
+<style>
+    body {
+        font-family: "Manjari", serif !important;
+        font-weight: 400 !important;
+        font-style: normal !important;
+    }
+</style>

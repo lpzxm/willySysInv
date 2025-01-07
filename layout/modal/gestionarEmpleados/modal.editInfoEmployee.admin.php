@@ -67,8 +67,6 @@
 </div>
 
 <script>
-   
-
     $(document).on("click", ".editEmployeeBtn", function() {
         $("#editUserModal").modal('show');
         var button = $(this);
@@ -90,7 +88,7 @@
         $("#editbirthDay").val(birthday);
         $("#editstartDay").val(startday);
         $("#editemployeeRole").val(rol);
-        
+
 
         $("#editEmpleadoRegistro").off("click").on("click", function() {
             let hasErrors = false;

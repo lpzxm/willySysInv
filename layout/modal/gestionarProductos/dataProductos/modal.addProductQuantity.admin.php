@@ -16,7 +16,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="addProductQuantity" class="form-label">Cantidad a añadir: <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="addProductQuantity" name="addProductQuantity" placeholder="Ingrese la cantidad" required>
+                        <input type="number" class="form-control" id="addProductQuantity" name="addProductQuantity" placeholder="Ingrese la cantidad" required autofocus>
                     </div>
                 </form>
             </div>
@@ -42,10 +42,15 @@
         $("#addProductQuantity").val('');
         $("#addCurrentQuantity").val(currentQuantityAdd);
         $("#addProductQuantityModal").modal("show");
+
+        // Enfocar el input cuando se abra el modal
+        $("#addProductQuantityModal").on("shown.bs.modal", function() {
+            $("#addProductQuantity").focus();
+        });
     });
 
     // Confirmar la suma de productos
-    $("#confirmAddProduct").on("click", function() {
+    function confirmAddProduct() {
         const quantityToAdd = parseInt($("#addProductQuantity").val().trim());
 
         // Validar el campo de cantidad
@@ -81,7 +86,7 @@
                         position: "bottom-center",
                     });
                     $("#addProductQuantityModal").modal("hide");
-                    $(".table-responsive").load("../../../layout/tables/products/table.products.admin.php");
+                    // $(".table-responsive").load("../../../layout/tables/products/table.products.admin.php");
                 } else {
                     console.error("Error: ", response);
                     alert("Ocurrió un error al procesar la solicitud.");
@@ -96,5 +101,16 @@
                 $("#addingProductSpinner").hide();
             },
         });
+    }
+
+    // Evento click en el botón de confirmar
+    $("#confirmAddProduct").on("click", confirmAddProduct);
+
+    // Ejecutar la acción al presionar Enter
+    $("#addProductForm").on("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Evitar el envío predeterminado del formulario
+            confirmAddProduct(); // Ejecutar la acción
+        }
     });
 </script>

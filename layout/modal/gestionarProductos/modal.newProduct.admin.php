@@ -154,15 +154,15 @@
         const fields = [{
                 id: "#nameProduct",
             },
-            {
-                id: "#categoryBrand",
-            },
-            {
-                id: "#brandProduct",
-            },
-            {
-                id: "#costProduct",
-            },
+            // {
+            //     id: "#categoryBrand",
+            // },
+            // {
+            //     id: "#brandProduct",
+            // },
+            // {
+            //     id: "#costProduct",
+            // },
             {
                 id: "#statusProduct",
             }

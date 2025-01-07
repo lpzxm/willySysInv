@@ -222,15 +222,15 @@
             const fields = [{
                     id: "#editnameProduct"
                 },
-                {
-                    id: "#editcategoryBrand"
-                },
-                {
-                    id: "#editbrandProduct"
-                },
-                {
-                    id: "#editcostProduct"
-                },
+                // {
+                //     id: "#editcategoryBrand"
+                // },
+                // {
+                //     id: "#editbrandProduct"
+                // },
+                // {
+                //     id: "#editcostProduct"
+                // },
                 {
                     id: "#editstatusProduct"
                 }

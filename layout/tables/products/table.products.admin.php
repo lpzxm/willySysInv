@@ -10,6 +10,7 @@ try {
     echo "Error: " . $e->getMessage();
 }
 $totalProductos = 0;
+$totalCantidad = 0;
 ?>
 <table class="table table-striped table-hover" id="tablaProductosData">
     <thead class="table-dark">
@@ -36,24 +37,36 @@ $totalProductos = 0;
                     <td><?= !empty($product['description']) ? htmlspecialchars($product['description']) : "<span class='text-info'>Sin Info</span>"; ?></td>
                     <td>
                         <?php
-                        //consulta para obtener la categoria a la que pertenece
-                        $queryCategory = "SELECT * FROM product_category WHERE id = :n1 AND status = 1";
-                        $stmtCategory = $pdo->prepare($queryCategory);
-                        $stmtCategory->bindParam(":n1", $product['id_category'], PDO::PARAM_INT);
-                        $stmtCategory->execute();
-                        $category = $stmtCategory->fetch(PDO::FETCH_ASSOC);
-                        echo $category['name'];
+
+                        if (!empty($product['id_category'])) {
+                            //consulta para obtener la categoria a la que pertenece
+                            $queryCategory = "SELECT * FROM product_category WHERE id = :n1 AND status = 1";
+                            $stmtCategory = $pdo->prepare($queryCategory);
+                            $stmtCategory->bindParam(":n1", $product['id_category'], PDO::PARAM_INT);
+                            $stmtCategory->execute();
+                            $category = $stmtCategory->fetch(PDO::FETCH_ASSOC);
+                            echo $category['name'];
+                        } else {
+                            echo "Sin Categoria";
+                        }
+
                         ?>
                     </td>
                     <td>
                         <?php
-                        //consulta para obtener la categoria a la que pertenece
-                        $queryBrand = "SELECT * FROM product_brand WHERE id = :n1 AND status = 1";
-                        $stmtBrand = $pdo->prepare($queryBrand);
-                        $stmtBrand->bindParam(":n1", $product['id_brand'], PDO::PARAM_INT);
-                        $stmtBrand->execute();
-                        $brand = $stmtBrand->fetch(PDO::FETCH_ASSOC);
-                        echo $brand['name'];
+
+                        if (!empty($product['id_brand'])) {
+                            //consulta para obtener la categoria a la que pertenece
+                            $queryBrand = "SELECT * FROM product_brand WHERE id = :n1 AND status = 1";
+                            $stmtBrand = $pdo->prepare($queryBrand);
+                            $stmtBrand->bindParam(":n1", $product['id_brand'], PDO::PARAM_INT);
+                            $stmtBrand->execute();
+                            $brand = $stmtBrand->fetch(PDO::FETCH_ASSOC);
+                            echo $brand['name'];
+                        } else {
+                            echo "Sin Marca";
+                        }
+
                         ?>
                     </td>
                     <td>$<?= !empty($product['net_cost']) ? number_format($product['net_cost'], 2) : "<span class='text-info'>Sin registro</span>"; ?></td>
@@ -81,6 +94,8 @@ $totalProductos = 0;
                     </td>
                 </tr>
                 <?php $totalProductos += $totalProducto ?>
+                <?php $totalCantidad += $product['quantity'] ?>
+
             <?php endforeach; ?>
 
         <?php else: ?>
@@ -88,6 +103,8 @@ $totalProductos = 0;
     </tbody>
 </table>
 <span><b><?php echo "Total Invertido en Productos: " . $totalProductos ?></b></span>
+<br>
+<span><b><?php echo "Total de cantidad de Productos: " . $totalCantidad ?></b></span>
 <script>
     $(document).ready(function() {
         $('#tablaProductosData').DataTable();

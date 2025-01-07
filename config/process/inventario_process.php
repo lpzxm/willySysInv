@@ -357,11 +357,11 @@ else if ($action == 'getBrandsByCategory') {
         $insert = $pdo->prepare($query);
 
         // Asignar los valores a variables antes de pasarlos a bindParam
-        $idCategory = htmlspecialchars(intval($_POST['idCategoryProduct']));
-        $idBrand = htmlspecialchars(intval($_POST['idBrandProduct']));
+        $idCategory = !empty($_POST['idCategoryProduct']) ? htmlspecialchars(intval($_POST['idCategoryProduct'])) : NULL;
+        $idBrand = !empty($_POST['idBrandProduct']) ? htmlspecialchars(intval($_POST['idBrandProduct'])) : NULL;
         $nameProduct = htmlspecialchars($_POST['nameProduct']);
         $descProduct = !empty($_POST['productDescription']) ? htmlspecialchars($_POST['productDescription']) : NULL;
-        $netCostProduct = htmlspecialchars($_POST['costProduct']);
+        $netCostProduct = !empty($_POST['costProduct']) ? htmlspecialchars($_POST['costProduct']) : NULL;
         $quantityProduct = !empty($_POST['quantityProduct']) ? htmlspecialchars(intval($_POST['quantityProduct'])) : NULL;
         $statusProduct = htmlspecialchars(intval($_POST['statusProduct']));
 
@@ -410,11 +410,11 @@ else if ($action == 'getBrandsByCategory') {
 
         // Asignar los valores a variables antes de pasarlos a bindParam
         $idProduct = htmlspecialchars(intval($_POST['idProductEdit']));
-        $idCategory = htmlspecialchars(intval($_POST['idCategoryProductEdit']));
-        $idBrand = htmlspecialchars(intval($_POST['idBrandProductEdit']));
+        $idCategory = !empty($_POST['idCategoryProductEdit']) ? htmlspecialchars(intval($_POST['idCategoryProductEdit'])) : NULL;
+        $idBrand = !empty($_POST['idBrandProductEdit']) ? htmlspecialchars(intval($_POST['idBrandProductEdit'])) : NULL;
         $nameProduct = htmlspecialchars($_POST['nameProductEdit']);
         $descProduct = !empty($_POST['productDescriptionEdit']) ? htmlspecialchars($_POST['productDescriptionEdit']) : NULL;
-        $netCostProduct = htmlspecialchars($_POST['costProductEdit']);
+        $netCostProduct = !empty($_POST['costProductEdit']) ? htmlspecialchars($_POST['costProductEdit']) : NULL;
         $quantityProduct = !empty($_POST['quantityProductEdit']) ? htmlspecialchars(intval($_POST['quantityProductEdit'])) : NULL;
         $statusProduct = htmlspecialchars(intval($_POST['statusProductEdit']));
 

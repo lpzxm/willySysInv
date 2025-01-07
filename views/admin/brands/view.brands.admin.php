@@ -20,7 +20,7 @@
 
 <?php include("./layout/modal/gestionarMarcas/modal.newBrand.admin.php");
 ?>
-<?php include("./layout/modal/gestionarMarcas/dataMarcas/modal.brandsProducts.admin.php"); 
+<?php include("./layout/modal/gestionarMarcas/dataMarcas/modal.brandsProducts.admin.php");
 ?>
 <?php include("./layout/modal/gestionarMarcas/modal.changeStatusBrand.admin.php");
 ?>

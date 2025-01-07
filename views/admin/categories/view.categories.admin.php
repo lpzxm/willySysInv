@@ -20,7 +20,7 @@
 
 <?php include("./layout/modal/gestionarCategorias/modal.newCategory.admin.php");
 ?>
-<?php include("./layout/modal/gestionarCategorias/dataCategorias/modal.brandsCategorias.admin.php"); 
+<?php include("./layout/modal/gestionarCategorias/dataCategorias/modal.brandsCategorias.admin.php");
 ?>
 <?php include("./layout/modal/gestionarCategorias/modal.changeStatusCategory.admin.php");
 ?>
