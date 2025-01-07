@@ -28,7 +28,7 @@ try {
                 <tr>
                     <td><?php echo htmlspecialchars($categoria['id']); ?></td>
                     <td><?= htmlspecialchars($categoria['name']); ?></td>
-                    <td><?= htmlspecialchars($categoria['code']); ?></td>
+                    <td><?= !empty($categoria['code']) ? htmlspecialchars($categoria['code']) : "<span class='text-warning'>Vacio</span>"; ?></td>
                     <td><?= htmlspecialchars((new DateTime($categoria['date_register']))->format('d/m/y')); ?></td>
                     <td><?= ($categoria['status'] === 1) ? "Activo" : "Inactivo" ?></td>
                     <td class="d-flex col">

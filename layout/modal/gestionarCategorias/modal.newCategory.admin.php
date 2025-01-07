@@ -4,14 +4,16 @@
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
                 <h5 class="modal-title" id="addCategoryModalLabel">Agregar Nueva Categoria</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalNewCategory"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    id="closeModalNewCategory"></button>
             </div>
-            <form>
+            <form id="categoryForm">
                 <div class="modal-body">
                     <div class="mb-3">
                         <div class="w-100 me-2">
-                            <label for="nameCategory" class="form-label">Nombre <span class="text-danger">(*)</span></label>
-                            <input type="text" class="form-control" id="nameCategory" required>
+                            <label for="nameCategory" class="form-label">Nombre <span
+                                    class="text-danger">(*)</span></label>
+                            <input type="text" class="form-control" id="nameCategory" required autofocus>
                         </div>
 
                     </div>
@@ -26,7 +28,8 @@
                     <hr>
                     <br>
                     <div class="mb-3">
-                        <label for="statusCategory" class="form-label">Estado<span class="text-danger">(*)</span></label>
+                        <label for="statusCategory" class="form-label">Estado<span
+                                class="text-danger">(*)</span></label>
                         <select class="form-select" id="statusCategory" required>
                             <option value="">Seleccione</option>
                             <option value="1">Activo</option>
@@ -37,8 +40,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" id="nuevaCategoriaRegistro">Guardar</button>
-                    <button type="button" class="btn btn-success" id="successNewCategory" style="display:none;" disabled><span
-                            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <button type="button" class="btn btn-success" id="successNewCategory" style="display:none;"
+                        disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Cargando...</button>
                 </div>
             </form>
@@ -47,20 +50,34 @@
 </div>
 
 <script>
-    $("#nuevaCategoriaRegistro").click(function(e) {
+
+    // Focus
+    $('#addCategoryModal').on('shown.bs.modal', function () {
+        $('#nameCategory').focus();
+    });
+
+    // Submit form on Enter key press
+    $('#categoryForm').on('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent default form submission
+            $('#nuevaCategoriaRegistro').click(); // Trigger click event of guardar button
+        }
+    });
+
+    $("#nuevaCategoriaRegistro").click(function (e) {
         e.preventDefault();
 
         let hasErrors = false;
         const fields = [{
-                id: "#nameCategory",
-            },
+            id: "#nameCategory",
+        },
 
-            {
-                id: "#codeCategory",
-            },
-            {
-                id: "#statusCategory",
-            }
+        // {
+        //     id: "#codeCategory",
+        // },
+        {
+            id: "#statusCategory",
+        }
         ];
 
         fields.forEach((field) => {
@@ -114,7 +131,7 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function(response) {
+            success: function (response) {
                 if (response == 1) {
                     $.toast({
                         heading: 'Finalizado',
@@ -132,7 +149,7 @@
                     console.error("Error: " + response);
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error AJAX: " + error);
             }
         });

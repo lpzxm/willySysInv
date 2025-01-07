@@ -112,7 +112,7 @@ if ($action == 'addNewEmployee') {
 
         // Asignar los valores a variables antes de pasarlos a bindParam
         $nameCategory = htmlspecialchars($_POST['name']);
-        $codeCategory = htmlspecialchars($_POST['code']);
+        $codeCategory = !empty($_POST['code']) ? htmlspecialchars($_POST['code']) : NULL;
         $statusCategory = htmlspecialchars(intval($_POST['status']));
 
         // Pasar las variables a bindParam
