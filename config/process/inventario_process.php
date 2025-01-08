@@ -157,7 +157,7 @@ if ($action == 'addNewEmployee') {
         // Asignar los valores a variables antes de pasarlos a bindParam
         $idCategory = htmlspecialchars(intval($_POST['idCodigoCategoria']));
         $nameCategory = htmlspecialchars($_POST['name']);
-        $codeCategory = htmlspecialchars($_POST['code']);
+        $codeCategory = !empty($_POST['code']) ? htmlspecialchars($_POST['code']) : NULL;
         $statusCategory = htmlspecialchars(intval($_POST['status']));
 
         $insert = $pdo->prepare($query);
@@ -167,6 +167,28 @@ if ($action == 'addNewEmployee') {
         $insert->bindParam(':n4', $idCategory);
         $insert->execute();
         echo 1;
+    } catch (PDOException $e) {
+        echo "Error :" . $e->getMessage();
+    }
+} else if ($action == 'assignProductsToCategory') {
+    try {
+        // Datos recibidos por POST
+        $categoriaId = $_POST['categoriaId'];
+        $productos = $_POST['productos']; // Array de IDs de productos
+        // Preparar la consulta para mayor seguridad
+        $query = "UPDATE products SET id_category = :categoriaId WHERE id = :productoId";
+        $stmt = $pdo->prepare($query);
+
+        // Ejecutar la consulta para cada producto
+        foreach ($productos as $productoId) {
+            $stmt->execute([
+                ':categoriaId' => $categoriaId,
+                ':productoId' => $productoId
+            ]);
+        }
+
+        echo 1; // Éxito
+        exit;
     } catch (PDOException $e) {
         echo "Error :" . $e->getMessage();
     }
@@ -236,6 +258,19 @@ if ($action == 'addNewEmployee') {
         echo "Error: " . $e->getMessage();
     }
 }
+//get de productos por categoria
+else if ($action == 'getProductsByCategory') {
+    try {
+        $categoryId = $_POST['categoryId'];
+        $query = "SELECT id, name, quantity, net_cost FROM products WHERE id_category = ? AND status = 1";
+        $stmt = $pdo->prepare($query);
+        $stmt->execute([$categoryId]);
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        echo json_encode($result);
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
 //get de marcas dentro de categoria con productos
 else if ($action == 'getBrandsAndProducts') {
     try {
@@ -274,6 +309,22 @@ else if ($action == 'getBrandsAndProducts') {
         }
 
         echo json_encode($response);
+        exit;
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+//get de productos sin categoria para asignarles una
+else if ($action == 'getUnassignedProducts') {
+    try {
+        // Query para seleccionar los productos
+        $query = "SELECT id, name, quantity, net_cost FROM products WHERE id_category IS NULL AND status = 1";
+
+        $stmt = $pdo->prepare($query); // Preparar la consulta
+        $stmt->execute();              // Ejecutar la consulta
+        $productos = $stmt->fetchAll(PDO::FETCH_ASSOC); // Obtener los resultados en un array asociativo
+
+        echo json_encode($productos); // Convertir a JSON y enviar al cliente
         exit;
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
@@ -493,6 +544,23 @@ else if ($action == 'subtractProduct') {
         } else {
             echo 0; // Error: cantidad a restar mayor que la disponible
         }
+    } catch (PDOException $e) {
+        echo "Error :" . $e->getMessage();
+    }
+}
+//colocar costo a producto en modal diferente xd
+else if ($action == 'updateProductCosts') {
+    try {
+        $categoryId = $_POST['categoryId'];
+        $costs = $_POST['costs'];
+
+        foreach ($costs as $productId => $cost) {
+            $query = "UPDATE products SET net_cost = ? WHERE id = ? AND id_category = ?";
+            $stmt = $pdo->prepare($query);
+            $stmt->execute([$cost, $productId, $categoryId]);
+        }
+
+        echo 1; // Respuesta de éxito
     } catch (PDOException $e) {
         echo "Error :" . $e->getMessage();
     }

@@ -2,17 +2,19 @@
 include("../../../config/net.php");
 try {
     // Consulta a la base de datos para imprimir productos (solo y exclusivamente productos)
-    $queryProducts = "SELECT * FROM products";
+    $queryProducts = "SELECT * FROM products WHERE status = 0";
     $stmtProducts = $pdo->prepare($queryProducts);
     $stmtProducts->execute();
     $products = $stmtProducts->fetchAll(PDO::FETCH_ASSOC);
+
+    $count = count($products);
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
 $totalProductos = 0;
 $totalCantidad = 0;
 ?>
-<table class="table table-striped table-hover" id="tablaProductosData">
+<table class="table table-striped table-hover" id="tablaProductosOcultosData">
     <thead class="table-dark">
         <tr>
             <th>ID</th>
@@ -102,11 +104,13 @@ $totalCantidad = 0;
         <?php endif; ?>
     </tbody>
 </table>
-<span><b><?php echo "Total Invertido en Productos: " . $totalProductos ?></b></span>
+<span><b><?php echo "Total Invertido en Productos Ocultos: " . $totalProductos ?></b></span>
 <br>
-<span><b><?php echo "Total de cantidad de Productos: " . $totalCantidad ?></b></span>
+<span><b><?php echo "Total de cantidad de Productos Ocultos: " . $totalCantidad ?></b></span>
+<br>
+<span><b><?php echo "Total de cantidad de Registros de Productos Ocultos: " . $count ?></b></span>
 <script>
     $(document).ready(function() {
-        $('#tablaProductosData').DataTable();
+        $('#tablaProductosOcultosData').DataTable();
     })
 </script>

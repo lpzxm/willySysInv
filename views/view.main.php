@@ -18,7 +18,6 @@
 </style>
 
 <div class="container mt-5">
-    <?php echo $_SESSION['user_id']; ?>
     <h2 class="text-center mb-4">Bienvenido al Panel Administrativo - <?= $_SESSION['user_name'] ?></h2>
     <h5 class="text-center">Selecciona una acción para comenzar:</h5>
 

@@ -64,9 +64,9 @@
             const fields = [{
                     id: "#editnameCategory"
                 },
-                {
-                    id: "#editcodeCategory"
-                },
+                // {
+                //     id: "#editcodeCategory"
+                // },
                 {
                     id: "#editstatusCategory"
                 }

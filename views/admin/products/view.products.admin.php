@@ -14,8 +14,32 @@
         </button>
     </div>
 
-    <!-- Tabla de marcas -->
-    <div class="table-responsive"></div>
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Productos Activos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="hiddenproducts-tab" data-bs-toggle="tab" data-bs-target="#hiddenproducts-tab-pane" type="button" role="tab" aria-controls="hiddenproducts-tab-pane" aria-selected="false">Productos Ocultos</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="productoutstock-tab" data-bs-toggle="tab" data-bs-target="#productoutstock-tab-pane" type="button" role="tab" aria-controls="productoutstock-tab-pane" aria-selected="false">Productos Sin Cantidad</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>En desarrollo...</button>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+            <div id="activeProductsTable" class="mt-4"></div>
+        </div>
+        <div class="tab-pane fade" id="hiddenproducts-tab-pane" role="tabpanel" aria-labelledby="hiddenproducts-tab" tabindex="0">
+            <div id="hiddenProductsTable" class="mt-4"></div>
+        </div>
+        <div class="tab-pane fade" id="productoutstock-tab-pane" role="tabpanel" aria-labelledby="productoutstock-tab" tabindex="0">
+            <div id="outStockProductsTable" class="mt-4"></div>
+        </div>
+        <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
+    </div>
 </div>
 
 <?php include("./layout/modal/gestionarProductos/modal.newProduct.admin.php");
@@ -31,6 +55,8 @@
 
 <script>
     $(document).ready(function() {
-        $('.table-responsive').load("../../../layout/tables/products/table.products.admin.php");
+        $('#activeProductsTable').load("../../../layout/tables/products/table.products.active.admin.php");
+        $('#hiddenProductsTable').load("../../../layout/tables/products/table.products.hidden.admin.php");
+        $('#outStockProductsTable').load("../../../layout/tables/products/table.products.outStock.admin.php");
     })
 </script>

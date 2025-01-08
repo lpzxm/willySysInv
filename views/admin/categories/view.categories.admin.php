@@ -15,20 +15,25 @@
     </div>
 
     <!-- Tabla de usuarios -->
-    <div class="table-responsive"></div>
+    <div class="table-responsive" id="tablaCategorias"></div>
 </div>
 
 <?php include("./layout/modal/gestionarCategorias/modal.newCategory.admin.php");
 ?>
-<?php include("./layout/modal/gestionarCategorias/dataCategorias/modal.brandsCategorias.admin.php");
+<?php #include("./layout/modal/gestionarCategorias/dataCategorias/modal.brandsCategorias.admin.php");
+?>
+<?php include("./layout/modal/gestionarCategorias/dataCategorias/modal.categoryProducts.admin.php");
 ?>
 <?php include("./layout/modal/gestionarCategorias/modal.changeStatusCategory.admin.php");
 ?>
 <?php include("./layout/modal/gestionarCategorias/modal.editCategory.admin.php");
 ?>
+<?php include("./layout/modal/gestionarCategorias/modal.assignCategoryProduct.admin.php");
+?>
+
 
 <script>
     $(document).ready(function() {
-        $('.table-responsive').load("../../../layout/tables/categories/table.categories.admin.php");
+        $('#tablaCategorias').load("../../../layout/tables/categories/table.categories.admin.php");
     })
 </script>

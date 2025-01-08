@@ -32,10 +32,17 @@ try {
                     <td><?= htmlspecialchars((new DateTime($categoria['date_register']))->format('d/m/y')); ?></td>
                     <td><?= ($categoria['status'] === 1) ? "Activo" : "Inactivo" ?></td>
                     <td class="d-flex col">
+                        <button
+                            class="btn btn-primary assignProductsBtn me-2"
+                            data-id="<?= $categoria['id']; ?>"
+                            data-name="<?= $categoria['name']; ?>">
+                            asignar
+                        </button>
+
                         <button class="btn btn-primary btn-sm me-2 editCategoryBtn" data-id="<?= $categoria['id']; ?>" data-name="<?= $categoria['name']; ?>" data-code="<?= $categoria['code']; ?>" data-status="<?= $categoria['status'] === 1 ?>">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-primary btn-sm me-2 viewBrandsintoCategory" data-id="<?= htmlspecialchars($categoria['id']); ?>">
+                        <button class="btn btn-primary btn-sm me-2 manageCategoryBtn" data-id="<?= htmlspecialchars($categoria['id']); ?>">
                             <i class="bi bi-tags-fill"></i>
                         </button>
                         <button class="btn btn-danger btn-sm changeStatusCategory" data-id="<?= htmlspecialchars($categoria['id']); ?>" data-status="<?= ($categoria['status'] === 1) ? "Inactivo" : "Activo" ?>">
@@ -50,7 +57,7 @@ try {
 </table>
 
 <script>
-    $(document).ready(function() {
-        $('#tablaCategoriasData').DataTable();
-    })
+    // $(document).ready(function() {
+    //     $('#tablaCategoriasData').DataTable();
+    // })
 </script>
