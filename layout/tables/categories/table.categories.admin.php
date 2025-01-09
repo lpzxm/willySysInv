@@ -2,7 +2,7 @@
 include("../../../config/net.php");
 try {
     // Consulta a la base de datos para imprimir categorias (solo y exclusivamente categorias)
-    $queryCategorias = "SELECT * FROM product_category";
+    $queryCategorias = "SELECT pc.*, (SELECT COUNT(*) FROM products p WHERE p.id_category = pc.id AND (p.net_cost IS NULL OR p.net_cost = 0)) AS productos_sin_costo FROM product_category pc";
     $stmtCategorias = $pdo->prepare($queryCategorias);
     $stmtCategorias->execute();
     $categorias = $stmtCategorias->fetchAll(PDO::FETCH_ASSOC);
@@ -15,6 +15,7 @@ try {
     <thead class="table-dark">
         <tr>
             <th>ID</th>
+            <th>Productos sin costo</th>
             <th>Nombre</th>
             <th>Codigo Inicial</th>
             <th>Fecha de Registro</th>
@@ -27,6 +28,9 @@ try {
             <?php foreach ($categorias as $categoria): ?>
                 <tr>
                     <td><?php echo htmlspecialchars($categoria['id']); ?></td>
+                    <td>
+                        <?= htmlspecialchars($categoria['productos_sin_costo']); ?>
+                    </td>
                     <td><?= htmlspecialchars($categoria['name']); ?></td>
                     <td><?= !empty($categoria['code']) ? htmlspecialchars($categoria['code']) : "<span class='text-warning'>Vacio</span>"; ?></td>
                     <td><?= htmlspecialchars((new DateTime($categoria['date_register']))->format('d/m/y')); ?></td>
@@ -42,7 +46,7 @@ try {
                         <button class="btn btn-primary btn-sm me-2 editCategoryBtn" data-id="<?= $categoria['id']; ?>" data-name="<?= $categoria['name']; ?>" data-code="<?= $categoria['code']; ?>" data-status="<?= $categoria['status'] === 1 ?>">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-primary btn-sm me-2 manageCategoryBtn" data-id="<?= htmlspecialchars($categoria['id']); ?>">
+                        <button class="btn btn-primary btn-sm me-2 manageCategoryBtn" data-id="<?= htmlspecialchars($categoria['id']); ?>" data-name="<?= $categoria['name']; ?>">
                             <i class="bi bi-tags-fill"></i>
                         </button>
                         <button class="btn btn-danger btn-sm changeStatusCategory" data-id="<?= htmlspecialchars($categoria['id']); ?>" data-status="<?= ($categoria['status'] === 1) ? "Inactivo" : "Activo" ?>">

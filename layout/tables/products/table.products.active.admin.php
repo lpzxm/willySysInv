@@ -75,7 +75,7 @@ $totalCantidad = 0;
                     <td><?= !empty($product['quantity']) ? htmlspecialchars($product['quantity']) : "<span class='text-info'>Sin registro</span>"; ?></td>
                     <td><?= htmlspecialchars((new DateTime($product['date_register']))->format('d/m/y')); ?></td>
                     <td><?= ($product['status'] === 1) ? "Activo" : "<span class='text-secondary'>Inactivo</span>" ?></td>
-                    <td>$
+                    <td class="text-danger fw-bold text-decoration-underline">$
                         <?php
                         $totalProducto = $product['net_cost'] * $product['quantity'];
                         echo number_format($totalProducto, 2) ?>
@@ -104,7 +104,7 @@ $totalCantidad = 0;
         <?php endif; ?>
     </tbody>
 </table>
-<span><b><?php echo "Total Invertido en Productos: " . $totalProductos ?></b></span>
+<span class="text-danger fw-bold text-decoration-underline"><b><?php echo "Total Invertido en Productos: $" . number_format($totalProductos, 2) ?></b></span>
 <br>
 <span><b><?php echo "Total de cantidad de Productos: " . $totalCantidad ?></b></span>
 <br>

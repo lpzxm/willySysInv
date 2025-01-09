@@ -85,20 +85,16 @@
                     `);
                     });
                 } else {
-                    $("#categoryProductsTableBody").append(`
-                    <tr>
-                        <td colspan="4" class="text-center">No hay productos asignados a esta categoría.</td>
-                    </tr>
-                `);
+                    alert("xd, no hay productos dentro de esta categoria")
                 }
 
                 // Inicializar DataTable
                 tableCategoryProducts = $("#categoryProductsTable").DataTable({
-                    pageLength: 5,
+                    pageLength: 50,
                     lengthChange: true,
-                    language: {
-                        url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
-                    },
+                    // language: {
+                    //     url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json",
+                    // },
                 });
 
                 // Enfocar automáticamente el primer campo de costo
@@ -133,7 +129,7 @@
             const productCost = $(this).val().trim();
 
             if (productCost !== "") {
-                updatedCosts[productId] = parseFloat(productCost);
+                updatedCosts[productId] = productCost;
             }
         });
 
@@ -159,10 +155,11 @@
                         text: "Los costos se han actualizado correctamente.",
                         showHideTransition: "slide",
                         icon: "success",
-                        hideAfter: 3000,
+                        hideAfter: 2000,
                         position: "bottom-center",
                     });
                     $("#manageCategoryProductsModal").modal("hide");
+                    location.reload();
                 } else {
                     console.error("Error: ", response);
                     alert("Ocurrió un error al guardar los costos.");

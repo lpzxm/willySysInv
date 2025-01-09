@@ -262,7 +262,7 @@ if ($action == 'addNewEmployee') {
 else if ($action == 'getProductsByCategory') {
     try {
         $categoryId = $_POST['categoryId'];
-        $query = "SELECT id, name, quantity, net_cost FROM products WHERE id_category = ? AND status = 1";
+        $query = "SELECT id, name, quantity, net_cost FROM products WHERE id_category = ? AND status = 1 AND net_cost IS NULL or net_cost = 0";
         $stmt = $pdo->prepare($query);
         $stmt->execute([$categoryId]);
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
