@@ -2,10 +2,12 @@
 include("../../../config/net.php");
 try {
     // Consulta a la base de datos para imprimir categorias (solo y exclusivamente categorias)
-    $queryCategorias = "SELECT pc.*, (SELECT COUNT(*) FROM products p WHERE p.id_category = pc.id AND (p.net_cost IS NULL OR p.net_cost = 0)) AS productos_sin_costo FROM product_category pc";
+    $queryCategorias = "SELECT pc.*, (SELECT COUNT(*) FROM products p WHERE p.id_category = pc.id AND (p.net_cost IS NULL OR p.net_cost = 0)) AS productos_sin_costo FROM product_category pc ORDER BY `productos_sin_costo` DESC";
     $stmtCategorias = $pdo->prepare($queryCategorias);
     $stmtCategorias->execute();
     $categorias = $stmtCategorias->fetchAll(PDO::FETCH_ASSOC);
+
+    $totalProductossinCosto = 0;
 } catch (PDOException $e) {
     echo "Error: " . $e->getMessage();
 }
@@ -54,11 +56,14 @@ try {
                         </button>
                     </td>
                 </tr>
+                <?php $totalProductossinCosto += $categoria['productos_sin_costo']; ?>
+
             <?php endforeach; ?>
         <?php else: ?>
         <?php endif; ?>
     </tbody>
 </table>
+<span><?php echo $totalProductossinCosto ?></span>
 
 <script>
     // $(document).ready(function() {

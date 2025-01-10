@@ -9,9 +9,13 @@
     <h2 class="text-center mb-4">Gestión de Productos</h2>
     <div class="d-flex justify-content-between align-items-center mb-3">
         <p class="mb-0">Administra los productos registrados dentro del sistema.</p>
-        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addproductModal">
-            <i class="bi bi-plus-circle"></i> Agregar Nuevo Producto
-        </button>
+        <div class="">
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addproductModal">
+                <i class="bi bi-plus-circle"></i> Agregar Nuevo Producto
+            </button>
+            <button class="btn btn-danger" onclick="window.location.href='../../../config/process/export_products.php';">Generar Excel!</button>
+        </div>
+
     </div>
 
     <ul class="nav nav-tabs" id="myTab" role="tablist">
