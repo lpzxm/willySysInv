@@ -78,7 +78,6 @@ if (isset($_SESSION['user_id'])) {
         <button type="submit" class="btn btn-primary btn-block mt-2" id="logginBtn">Iniciar sesión</button>
     </div>
 </div>
-
 <script>
     $('#logginBtn').click(function() {
         let email = $("#email").val();

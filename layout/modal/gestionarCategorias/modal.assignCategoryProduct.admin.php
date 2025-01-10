@@ -74,12 +74,12 @@
                     `);
                     });
                 } else {
-                //     // Mostrar mensaje si no hay productos disponibles
-                //     $("#productosTableBody").append(`
-                //     <tr>
-                //         <td colspan="4" class="text-center">No hay productos disponibles para asignar.</td>
-                //     </tr>
-                // `);
+                    //     // Mostrar mensaje si no hay productos disponibles
+                    //     $("#productosTableBody").append(`
+                    //     <tr>
+                    //         <td colspan="4" class="text-center">No hay productos disponibles para asignar.</td>
+                    //     </tr>
+                    // `);
                 }
                 // Inicializar el DataTable después de agregar las filas dinámicas
                 tablaProductos = $("#tablaProductosinCategoria").DataTable({

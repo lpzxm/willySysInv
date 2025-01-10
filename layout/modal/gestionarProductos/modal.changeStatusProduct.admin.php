@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body">
                 <p>¿Estás seguro de que deseas cambiar el estado de esta marca a: <span id="currentStatus"
-                        class="fw-bold"></span>? </p>
+                        class="fw-bold"></span>?</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary dismiss" data-dismiss="modal">Cancelar</button>

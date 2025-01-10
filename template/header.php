@@ -1,5 +1,4 @@
 <style>
-
     /* Personalización de estilos */
     .navbar {
         background-color: #007bff;
@@ -81,7 +80,7 @@
         } else {
             //otra parte del menu para empleados, el de arriba es del admin xd
         ?>
-            <button class="navbar-toggler gsap-link" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav" style="margin-right: 5vh;">
