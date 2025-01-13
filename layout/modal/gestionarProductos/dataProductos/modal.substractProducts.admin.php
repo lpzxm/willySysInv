@@ -1,9 +1,11 @@
 <!-- Modal para restar productos -->
-<div class="modal fade" id="subtractProductModal" tabindex="-1" aria-labelledby="subtractProductModalLabel" aria-hidden="true">
+<div class="modal fade" id="subtractProductModal" tabindex="-1" aria-labelledby="subtractProductModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title" id="subtractProductModalLabel">Restar Productos - <span id="subtractProductName"></span></h5>
+                <h5 class="modal-title" id="subtractProductModalLabel">Restar Productos - <span
+                        id="subtractProductName"></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -14,17 +16,20 @@
                         <input type="number" class="form-control" id="subtractCurrentQuantity" readonly disabled>
                     </div>
                     <div class="mb-3">
-                        <label for="subtractQuantity" class="form-label">Cantidad a Restar <span class="text-danger">(*)</span></label>
-                        <input type="number" class="form-control" id="subtractQuantity" required>
+                        <label for="subtractQuantity" class="form-label">Cantidad a Restar <span
+                                class="text-danger">(*)</span></label>
+                        <input type="number" class="form-control" id="subtractQuantity" oninput="onlyNumbersDot(this)" required>
                     </div>
-                    <div class="alert alert-danger d-none" id="subtractErrorAlert">La cantidad a restar no puede ser mayor que la cantidad actual.</div>
+                    <div class="alert alert-danger d-none" id="subtractErrorAlert">La cantidad a restar no puede ser
+                        mayor que la cantidad actual.</div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-danger" id="subtractProductSubmit">Restar</button>
                 <button type="button" class="btn btn-danger d-none" id="subtractLoadingButton" disabled>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Procesando...
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Procesando...
                 </button>
             </div>
         </div>
@@ -32,7 +37,14 @@
 </div>
 
 <script>
-    $(document).on("click", ".addProductSale", function() {
+    function onlyNumbersDot(input) {
+        const regex = /^\d+(\.\d{0,2})?$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.slice(0, -1);
+        };
+    };
+
+    $(document).on("click", ".addProductSale", function () {
         const productId = $(this).data("id");
         const productName = $(this).data("name");
         const currentQuantity = $(this).data("quantity");
@@ -47,7 +59,7 @@
         $("#subtractProductModal").modal("show");
     });
 
-    $("#subtractProductSubmit").on("click", function() {
+    $("#subtractProductSubmit").on("click", function () {
         const productId = $("#subtractProductId").val();
         const currentQuantity = parseInt($("#subtractCurrentQuantity").val());
         const quantityToSubtract = parseInt($("#subtractQuantity").val());
@@ -70,7 +82,7 @@
                 productId: productId,
                 quantity: quantityToSubtract
             },
-            success: function(response) {
+            success: function (response) {
                 if (response == 1) {
                     $.toast({
                         heading: "Éxito",
@@ -93,10 +105,10 @@
                     });
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error AJAX: ", error);
             },
-            complete: function() {
+            complete: function () {
                 // Restaurar botones
                 $("#subtractProductSubmit").removeClass("d-none");
                 $("#subtractLoadingButton").addClass("d-none");

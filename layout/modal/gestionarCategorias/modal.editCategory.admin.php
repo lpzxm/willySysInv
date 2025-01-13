@@ -4,13 +4,15 @@
         <div class="modal-content">
             <div class="modal-header bg-warning text-white">
                 <h5 class="modal-title" id="editCategoryModalLabel">Editar Categoria - <span id="name"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModaleditCategory"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    id="closeModaleditCategory"></button>
             </div>
-            <form>
+            <form id="categoryEditForm">
                 <div class="modal-body">
                     <div class="mb-3">
                         <div class="w-100 me-2">
-                            <label for="editnameCategory" class="form-label">Nombre <span class="text-danger">(*)</span></label>
+                            <label for="editnameCategory" class="form-label">Nombre <span
+                                    class="text-danger">(*)</span></label>
                             <input type="text" class="form-control" id="editnameCategory" required>
                         </div>
 
@@ -25,7 +27,8 @@
                     <hr>
                     <br>
                     <div class="mb-3">
-                        <label for="editstatusCategory" class="form-label">Estado<span class="text-danger">(*)</span></label>
+                        <label for="editstatusCategory" class="form-label">Estado<span
+                                class="text-danger">(*)</span></label>
                         <select class="form-select" id="editstatusCategory" required>
                             <option value="">Seleccione</option>
                             <option value="1">Activo</option>
@@ -36,8 +39,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" id="editCategoriaRegistro">Guardar</button>
-                    <button type="button" class="btn btn-success" id="successeditCategory" style="display:none;" disabled><span
-                            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <button type="button" class="btn btn-success" id="successeditCategory" style="display:none;"
+                        disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Cargando...</button>
                 </div>
             </form>
@@ -46,7 +49,38 @@
 </div>
 
 <script>
-    $(document).on("click", ".editCategoryBtn", function() {
+
+    // Focus
+    $('#editCategoryModal').on('shown.bs.modal', function () {
+        $('#editnameCategory').focus();
+    });
+
+    document.getElementById("editnameCategory").addEventListener("input", function (event) {
+        // Remover cualquier carácter que no sea una letra (a-z, A-Z) o espacio
+        const regex = /^[a-zA-Z\s]*$/;
+        if (!regex.test(this.value)) {
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, ""); // Reemplaza los caracteres inválidos
+        }
+    });
+
+    document.getElementById("editcodeCategory").addEventListener("input", function () {
+        // Permitir solo letras y convertir a mayúsculas
+        const regex = /^[a-zA-Z]*$/;
+        if (!regex.test(this.value)) {
+            this.value = this.value.replace(/[^a-zA-Z]/g, ""); // Elimina caracteres no permitidos
+        }
+        this.value = this.value.toUpperCase(); // Convierte todo a mayúsculas
+    });
+
+    // Submit form on Enter key press
+    $('#categoryEditForm').on('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent default form submission
+            $('#editCategoriaRegistroF').click(); // Trigger click event of guardar button
+        }
+    });
+
+    $(document).on("click", ".editCategoryBtn", function () {
         $("#editCategoryModal").modal('show');
         var button = $(this);
         var idCategory = button.data("id");
@@ -59,17 +93,17 @@
         $("#editcodeCategory").val(code);
         $("#editstatusCategory").val(state);
 
-        $("#editCategoriaRegistro").off("click").on("click", function() {
+        $("#editCategoriaRegistro").off("click").on("click", function () {
             let hasErrors = false;
             const fields = [{
-                    id: "#editnameCategory"
-                },
-                // {
-                //     id: "#editcodeCategory"
-                // },
-                {
-                    id: "#editstatusCategory"
-                }
+                id: "#editnameCategory"
+            },
+            // {
+            //     id: "#editcodeCategory"
+            // },
+            {
+                id: "#editstatusCategory"
+            }
             ];
 
             fields.forEach((field) => {
@@ -124,7 +158,7 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function(response) {
+                success: function (response) {
                     if (response == 1) {
                         $.toast({
                             heading: 'Finalizado',
@@ -142,7 +176,7 @@
                         console.error("Error: " + response);
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("Error AJAX: " + error);
                 }
             });

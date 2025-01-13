@@ -1,9 +1,11 @@
 <!-- Modal para agregar productos -->
-<div class="modal fade" id="addProductQuantityModal" tabindex="-1" aria-labelledby="addProductQuantityModalLabel" aria-hidden="true">
+<div class="modal fade" id="addProductQuantityModal" tabindex="-1" aria-labelledby="addProductQuantityModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
-                <h5 class="modal-title" id="addProductQuantityModalLabel">Añadir Productos - <span id="addProductName"></span></h5>
+                <h5 class="modal-title" id="addProductQuantityModalLabel">Añadir Productos - <span
+                        id="addProductName"></span></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -15,8 +17,10 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="addProductQuantity" class="form-label">Cantidad a añadir: <span class="text-danger">*</span></label>
-                        <input type="number" class="form-control" id="addProductQuantity" name="addProductQuantity" placeholder="Ingrese la cantidad" required autofocus>
+                        <label for="addProductQuantity" class="form-label">Cantidad a añadir: <span
+                                class="text-danger">*</span></label>
+                        <input type="number" class="form-control" id="addProductQuantity" name="addProductQuantity"
+                            placeholder="Ingrese la cantidad" oninput="onlyNumbersDot(this)" required autofocus>
                     </div>
                 </form>
             </div>
@@ -24,7 +28,8 @@
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-success" id="confirmAddProduct">Confirmar</button>
                 <button type="button" class="btn btn-success" id="addingProductSpinner" style="display: none;" disabled>
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Procesando...
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Procesando...
                 </button>
             </div>
         </div>
@@ -32,8 +37,15 @@
 </div>
 
 <script>
+    function onlyNumbersDot(input) {
+        const regex = /^\d+(\.\d{0,2})?$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.slice(0, -1);
+        };
+    };
+
     selectedProductId = null;
-    $(document).on("click", ".addProductIncoming", function() {
+    $(document).on("click", ".addProductIncoming", function () {
         const productName = $(this).data("name");
         selectedProductId = $(this).data("id");
         const currentQuantityAdd = $(this).data("quantity");
@@ -44,7 +56,7 @@
         $("#addProductQuantityModal").modal("show");
 
         // Enfocar el input cuando se abra el modal
-        $("#addProductQuantityModal").on("shown.bs.modal", function() {
+        $("#addProductQuantityModal").on("shown.bs.modal", function () {
             $("#addProductQuantity").focus();
         });
     });
@@ -75,7 +87,7 @@
                 productId: selectedProductId,
                 quantity: quantityToAdd,
             },
-            success: function(response) {
+            success: function (response) {
                 if (response == 1) {
                     $.toast({
                         heading: "Éxito",
@@ -92,11 +104,11 @@
                     alert("Ocurrió un error al procesar la solicitud.");
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error AJAX: ", error);
                 alert("Ocurrió un error al comunicarse con el servidor.");
             },
-            complete: function() {
+            complete: function () {
                 $("#confirmAddProduct").show();
                 $("#addingProductSpinner").hide();
             },
@@ -107,7 +119,7 @@
     $("#confirmAddProduct").on("click", confirmAddProduct);
 
     // Ejecutar la acción al presionar Enter
-    $("#addProductForm").on("keydown", function(event) {
+    $("#addProductForm").on("keydown", function (event) {
         if (event.key === "Enter") {
             event.preventDefault(); // Evitar el envío predeterminado del formulario
             confirmAddProduct(); // Ejecutar la acción

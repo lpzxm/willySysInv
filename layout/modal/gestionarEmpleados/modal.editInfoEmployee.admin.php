@@ -4,27 +4,30 @@
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
                 <h5 class="modal-title" id="editUserModalLabel">Editar Información del Empleado</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalEditEmployee"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    id="closeModalEditEmployee"></button>
             </div>
             <form>
                 <div class="modal-body">
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="userName" class="form-label">Primer Nombre <span class="text-danger">(*)</span></label>
+                            <label for="userName" class="form-label validateOnlyText">Primer Nombre <span
+                                    class="text-danger">(*)</span></label>
                             <input type="text" class="form-control" id="editfirstName" required>
                         </div>
                         <div class="w-100">
-                            <label for="userName" class="form-label">Segundo Nombre</label>
+                            <label for="userName" class="form-label validateOnlyText">Segundo Nombre</label>
                             <input type="text" class="form-control" id="editsecondName" required>
                         </div>
                     </div>
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="userName" class="form-label">Primer Apellido <span class="text-danger">(*)</span></label>
+                            <label for="userName" class="form-label validateOnlyText">Primer Apellido <span
+                                    class="text-danger">(*)</span></label>
                             <input type="text" class="form-control" id="editfirstLastName" required>
                         </div>
                         <div class="w-100">
-                            <label for="userName" class="form-label">Segundo Apellido</label>
+                            <label for="userName" class="form-label validateOnlyText">Segundo Apellido</label>
                             <input type="text" class="form-control" id="editsecondLastName" required>
                         </div>
                     </div>
@@ -34,12 +37,17 @@
                     </div>
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="userName" class="form-label">Fecha de Nacimiento <span class="text-danger">(*)</span></label>
-                            <input type="date" class="form-control" id="editbirthDay" required>
+                            <label for="userName" class="form-label">Fecha de Nacimiento <span
+                                    class="text-danger">(*)</span></label>
+                            <input type="date" class="form-control" id="editbirthDay" max="<?php echo date('Y-m-d') ?>"
+                                required>
+                            <small id="birthDayError" class="text-danger" style="display: none;">Debes tener al menos 18
+                                años para registrarte.</small>
                         </div>
                         <div class="w-100">
                             <label for="userName" class="form-label">Fecha de inicio de labores</label>
-                            <input type="date" class="form-control" id="editstartDay" required>
+                            <input type="date" class="form-control" id="editstartDay" max="<?php echo date('Y-m-d') ?>"
+                                required>
                         </div>
                     </div>
                     <br>
@@ -57,8 +65,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" id="editEmpleadoRegistro">Guardar</button>
-                    <button type="button" class="btn btn-success" id="successeditEmployee" style="display:none;" disabled><span
-                            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <button type="button" class="btn btn-success" id="successeditEmployee" style="display:none;"
+                        disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Cargando...</button>
                 </div>
             </form>
@@ -67,7 +75,45 @@
 </div>
 
 <script>
-    $(document).on("click", ".editEmployeeBtn", function() {
+
+    $(".validateOnlyText").on("input", function () {
+        // Permitir solo letras y espacios
+        const regex = /^[a-zA-Z\s]*$/;
+        const value = $(this).val();
+
+        if (!regex.test(value)) {
+            $(this).val(value.replace(/[^a-zA-Z\s]/g, "")); // Reemplaza caracteres no válidos
+        }
+    });
+
+    $("#editbirthDay").on("change", function () {
+        const birthDayInput = $(this);
+        const errorElement = $("#birthDayError");
+
+        // Obtener la fecha seleccionada
+        const birthDate = new Date(birthDayInput.val());
+        const today = new Date();
+
+        // Calcular la edad
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        const dayDifference = today.getDate() - birthDate.getDate();
+
+        // Ajustar la edad si el mes o día no han llegado
+        if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+            age--;
+        }
+
+        // Validar si es menor de 18 años
+        if (age < 18) {
+            birthDayInput.val(""); // Limpiar el campo
+            errorElement.show();  // Mostrar mensaje de error
+        } else {
+            errorElement.hide();  // Ocultar mensaje de error
+        }
+    });
+
+    $(document).on("click", ".editEmployeeBtn", function () {
         $("#editUserModal").modal('show');
         var button = $(this);
         var idEmployee = button.data("id");
@@ -90,21 +136,21 @@
         $("#editemployeeRole").val(rol);
 
 
-        $("#editEmpleadoRegistro").off("click").on("click", function() {
+        $("#editEmpleadoRegistro").off("click").on("click", function () {
             let hasErrors = false;
             const fields = [{
-                    id: "#editfirstName",
-                },
+                id: "#editfirstName",
+            },
 
-                {
-                    id: "#editfirstLastName",
-                },
-                {
-                    id: "#editbirthDay",
-                },
-                {
-                    id: "#editemployeeRole"
-                }
+            {
+                id: "#editfirstLastName",
+            },
+            {
+                id: "#editbirthDay",
+            },
+            {
+                id: "#editemployeeRole"
+            }
             ];
 
             fields.forEach((field) => {
@@ -163,7 +209,7 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function(response) {
+                success: function (response) {
                     if (response == 1) {
                         $("#editEmpleadoRegistro").show();
                         $("#successeditEmployee").hide();
@@ -181,7 +227,7 @@
                         console.error("Error: " + response);
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("Error AJAX: " + error);
                 }
             });

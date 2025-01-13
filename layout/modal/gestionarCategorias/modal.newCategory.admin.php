@@ -51,32 +51,49 @@
 
 <script>
     // Focus
-    $('#addCategoryModal').on('shown.bs.modal', function() {
+    $('#addCategoryModal').on('shown.bs.modal', function () {
         $('#nameCategory').focus();
     });
 
+    document.getElementById("nameCategory").addEventListener("input", function (event) {
+        // Remover cualquier carácter que no sea una letra (a-z, A-Z) o espacio
+        const regex = /^[a-zA-Z\s]*$/;
+        if (!regex.test(this.value)) {
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, ""); // Reemplaza los caracteres inválidos
+        }
+    });
+
+    document.getElementById("codeCategory").addEventListener("input", function () {
+        // Permitir solo letras y convertir a mayúsculas
+        const regex = /^[a-zA-Z]*$/;
+        if (!regex.test(this.value)) {
+            this.value = this.value.replace(/[^a-zA-Z]/g, ""); // Elimina caracteres no permitidos
+        }
+        this.value = this.value.toUpperCase(); // Convierte todo a mayúsculas
+    });
+
     // Submit form on Enter key press
-    $('#categoryForm').on('keydown', function(e) {
+    $('#categoryForm').on('keydown', function (e) {
         if (e.key === 'Enter') {
             e.preventDefault(); // Prevent default form submission
             $('#nuevaCategoriaRegistro').click(); // Trigger click event of guardar button
         }
     });
 
-    $("#nuevaCategoriaRegistro").click(function(e) {
+    $("#nuevaCategoriaRegistro").click(function (e) {
         e.preventDefault();
 
         let hasErrors = false;
         const fields = [{
-                id: "#nameCategory",
-            },
+            id: "#nameCategory",
+        },
 
-            // {
-            //     id: "#codeCategory",
-            // },
-            {
-                id: "#statusCategory",
-            }
+        // {
+        //     id: "#codeCategory",
+        // },
+        {
+            id: "#statusCategory",
+        }
         ];
 
         fields.forEach((field) => {
@@ -130,7 +147,7 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function(response) {
+            success: function (response) {
                 if (response == 1) {
                     $.toast({
                         heading: 'Finalizado',
@@ -148,7 +165,7 @@
                     console.error("Error: " + response);
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error AJAX: " + error);
             }
         });

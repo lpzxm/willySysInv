@@ -4,42 +4,50 @@
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
                 <h5 class="modal-title" id="addUserModalLabel">Agregar Nuevo Empleado</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalNewEmployee"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    id="closeModalNewEmployee"></button>
             </div>
             <form>
                 <div class="modal-body">
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="userName" class="form-label">Primer Nombre <span class="text-danger">(*)</span></label>
-                            <input type="text" class="form-control" id="firstName" required>
+                            <label for="userName" class="form-label">Primer Nombre <span
+                                    class="text-danger">(*)</span></label>
+                            <input type="text" class="form-control validateOnlyText" id="firstName" required>
                         </div>
                         <div class="w-100">
                             <label for="userName" class="form-label">Segundo Nombre</label>
-                            <input type="text" class="form-control" id="secondName" required>
+                            <input type="text" class="form-control validateOnlyText" id="secondName" required>
                         </div>
                     </div>
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="userName" class="form-label">Primer Apellido <span class="text-danger">(*)</span></label>
-                            <input type="text" class="form-control" id="firstLastName" required>
+                            <label for="userName" class="form-label">Primer Apellido <span
+                                    class="text-danger">(*)</span></label>
+                            <input type="text" class="form-control validateOnlyText" id="firstLastName" required>
                         </div>
                         <div class="w-100">
                             <label for="userName" class="form-label">Segundo Apellido</label>
-                            <input type="text" class="form-control" id="secondLastName" required>
+                            <input type="text" class="form-control validateOnlyText" id="secondLastName" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="userRole" class="form-label">Número de DUI</label>
-                        <input type="text" class="form-control" name="DUInumber" id="numberDUI">
+                        <input type="text" class="form-control" name="DUInumber" id="numberDUI" maxlength="10">
                     </div>
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="userName" class="form-label">Fecha de Nacimiento <span class="text-danger">(*)</span></label>
-                            <input type="date" class="form-control" id="birthDay" required>
+                            <label for="userName" class="form-label">Fecha de Nacimiento <span
+                                    class="text-danger">(*)</span></label>
+                            <input type="date" class="form-control" id="birthDay" max="<?php echo date('Y-m-d') ?>"
+                                required>
+                            <small id="birthDayError" class="text-danger" style="display: none;">Debes tener al menos 18
+                                años para registrarte.</small>
                         </div>
                         <div class="w-100">
                             <label for="userName" class="form-label">Fecha de inicio de labores</label>
-                            <input type="date" class="form-control" id="startDay" required>
+                            <input type="date" class="form-control" id="startDay" max="<?php echo date('Y-m-d') ?>"
+                                required>
                         </div>
                     </div>
                     <br>
@@ -49,15 +57,28 @@
                         <div class="w-100 me-3">
                             <label for="email" class="form-label">Correo <span class="text-danger">(*)</span></label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" placeholder="usuario" id="email">
+                                <input type="text" class="form-control" placeholder="usuario"
+                                    oninput="validateEmailInput(this)" id="email">
                                 <span class="input-group-text">@willy.com</span>
                             </div>
                         </div>
                         <div class="w-100">
-                            <label for="userPassword" class="form-label">Contraseña <span class="text-danger">(*)</span></label>
-                            <input type="password" class="form-control" id="password" required>
+                            <label for="userPassword" class="form-label">Contraseña <span
+                                    class="text-danger">(*)</span></label>
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="password" placeholder="Contraseña"
+                                    required oninput="checkPasswordStrength()">
+                                <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                    <i class="bi bi-eye-slash"></i>
+                                </span>
+                            </div>
+                            <div class="progress mt-2" style="height: 5px;">
+                                <div id="passwordStrengthBar" class="progress-bar" role="progressbar" style="width: 0%;"
+                                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                            <small id="passwordHelp" class="form-text text-muted">La contraseña debe tener al menos 8
+                                caracteres, incluyendo letras y números.</small>
                         </div>
-
                     </div>
                     <div class="mb-3">
                         <label for="userRole" class="form-label">Rol<span class="text-danger">(*)</span></label>
@@ -71,8 +92,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" id="nuevoEmpleadoRegistro">Guardar</button>
-                    <button type="button" class="btn btn-success" id="successNewEmployee" style="display:none;" disabled><span
-                            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <button type="button" class="btn btn-success" id="successNewEmployee" style="display:none;"
+                        disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Cargando...</button>
                 </div>
             </form>
@@ -81,29 +102,129 @@
 </div>
 
 <script>
-    $("#nuevoEmpleadoRegistro").click(function(e) {
+    $(".validateOnlyText").on("input", function () {
+        // Permitir solo letras y espacios
+        const regex = /^[a-zA-Z\s]*$/;
+        const value = $(this).val();
+
+        if (!regex.test(value)) {
+            $(this).val(value.replace(/[^a-zA-Z\s]/g, "")); // Reemplaza caracteres no válidos
+        }
+    });
+
+    function validateEmailInput(input) {
+        // Eliminar cualquier carácter que no sea letra o número
+        input.value = input.value.replace(/[^a-zA-Z0-9]/g, '');
+    };
+
+    $("#birthDay").on("change", function () {
+        const birthDayInput = $(this);
+        const errorElement = $("#birthDayError");
+
+        // Obtener la fecha seleccionada
+        const birthDate = new Date(birthDayInput.val());
+        const today = new Date();
+
+        // Calcular la edad
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        const dayDifference = today.getDate() - birthDate.getDate();
+
+        // Ajustar la edad si el mes o día no han llegado
+        if (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0)) {
+            age--;
+        }
+
+        // Validar si es menor de 18 años
+        if (age < 18) {
+            birthDayInput.val(""); // Limpiar el campo
+            errorElement.show();  // Mostrar mensaje de error
+        } else {
+            errorElement.hide();  // Ocultar mensaje de error
+        }
+    });
+
+    $("#numberDUI").on("input", function () {
+        let input = $(this).val();
+        // Eliminar cualquier caracter no numérico
+        input = input.replace(/\D/g, "");
+        // Aplicar el formato con guion
+        if (input.length > 8) {
+            input = input.replace(/(\d{8})(\d{1})/, "$1-$2");
+        }
+        $(this).val(input);
+    });
+
+    // Función para alternar la visibilidad de la contraseña
+    document.getElementById('togglePassword').addEventListener('click', function () {
+        const passwordField = document.getElementById('password');
+        const icon = this.querySelector('i');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.remove('bi-eye-slash');
+            icon.classList.add('bi-eye');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.remove('bi-eye');
+            icon.classList.add('bi-eye-slash');
+        }
+    });
+
+    // Función para verificar la fortaleza de la contraseña
+    function checkPasswordStrength() {
+        const password = document.getElementById('password').value;
+        const strengthBar = document.getElementById('passwordStrengthBar');
+        const passwordHelp = document.getElementById('passwordHelp');
+        let strength = 0;
+
+        // Verificar la longitud mínima
+        if (password.length >= 8) strength += 25;
+        // Verificar la presencia de letras mayúsculas y minúsculas
+        if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength += 25;
+        // Verificar la presencia de números
+        if (/\d/.test(password)) strength += 25;
+        // Verificar la presencia de caracteres especiales
+        if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) strength += 25;
+
+        // Actualizar la barra de progreso
+        strengthBar.style.width = strength + '%';
+        strengthBar.setAttribute('aria-valuenow', strength);
+
+        // Actualizar el mensaje de ayuda
+        if (strength === 100) {
+            passwordHelp.textContent = 'Contraseña segura.';
+            passwordHelp.classList.remove('text-muted');
+            passwordHelp.classList.add('text-success');
+        } else {
+            passwordHelp.textContent = 'La contraseña debe tener al menos 8 caracteres, incluyendo letras y números.';
+            passwordHelp.classList.remove('text-success');
+            passwordHelp.classList.add('text-muted');
+        }
+    };
+
+
+    $("#nuevoEmpleadoRegistro").click(function (e) {
         e.preventDefault();
 
         let hasErrors = false;
         const fields = [{
-                id: "#firstName",
-            },
-
-            {
-                id: "#firstLastName",
-            },
-            {
-                id: "#birthDay",
-            },
-            {
-                id: "#email",
-            },
-            {
-                id: "#password"
-            },
-            {
-                id: "#employeeRole"
-            }
+            id: "#firstName",
+        },
+        {
+            id: "#firstLastName",
+        },
+        {
+            id: "#birthDay",
+        },
+        {
+            id: "#email",
+        },
+        {
+            id: "#password"
+        },
+        {
+            id: "#employeeRole"
+        }
         ];
 
         fields.forEach((field) => {
@@ -131,7 +252,7 @@
         if ($("#password").val().length < 8) {
             $.toast({
                 heading: 'Error',
-                text: 'La contraseña debe presentar al menos 9 caracteres',
+                text: 'La contraseña debe presentar al menos 8 caracteres',
                 showHideTransition: 'slide',
                 icon: 'error',
                 hideAfter: 4000,
@@ -176,7 +297,7 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function(response) {
+            success: function (response) {
                 if (response == 1) {
                     $.toast({
                         heading: 'Finalizado',
@@ -194,7 +315,7 @@
                     console.error("Error: " + response);
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error AJAX: " + error);
             }
         });
@@ -223,5 +344,5 @@
         // console.log("Correo Electrónico: " + correo);
         // console.log("Contraseña: " + password);
         // console.log("Rol del Empleado: " + role);
-    })
+    });
 </script>

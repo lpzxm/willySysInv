@@ -4,23 +4,28 @@
         <div class="modal-content">
             <div class="modal-header bg-success text-white">
                 <h5 class="modal-title" id="addProductModalLabel">Agregar Nueva Producto</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModalNewProduct"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    id="closeModalNewProduct"></button>
             </div>
             <form>
                 <div class="modal-body">
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="nameProduct" class="form-label">Nombre del producto<span class="text-danger">(*)</span></label>
-                            <textarea class="form-control" name="nameProduct" id="nameProduct" cols="10" rows="2" style="resize: none;" required></textarea>
+                            <label for="nameProduct" class="form-label">Nombre del producto<span
+                                    class="text-danger">(*)</span></label>
+                            <textarea class="form-control" name="nameProduct" id="nameProduct" cols="10" rows="2"
+                                style="resize: none;" required></textarea>
                         </div>
                         <div class="w-100">
                             <label for="descProduct" class="form-label">Descripción del producto:</label>
-                            <textarea class="form-control" name="descProduct" id="descProduct" cols="10" rows="2" style="resize: none;" required></textarea>
+                            <textarea class="form-control" name="descProduct" id="descProduct" cols="10" rows="2"
+                                style="resize: none;" required></textarea>
                         </div>
                     </div>
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="categoryBrand" class="form-label">Categoria a la que pertenece: <span class="text-danger">(*)</span></label>
+                            <label for="categoryBrand" class="form-label">Categoria a la que pertenece: <span
+                                    class="text-danger">(*)</span></label>
                             <select class="form-select select-example" name="categoryBrand" id="categoryBrand" required>
                                 <option value="">Seleccione</option>
                                 <?php
@@ -34,7 +39,9 @@
                             </select>
                         </div>
                         <div class="w-100">
-                            <label for="brandProduct" class="form-label">Marca del producto: <span class="text-danger">(*)</span><span class="text-success" id="successBrand"></span></label>
+                            <label for="brandProduct" class="form-label">Marca del producto: <span
+                                    class="text-danger">(*)</span><span class="text-success"
+                                    id="successBrand"></span></label>
                             <select class="form-select select-example2" id="brandProduct" required>
                                 <!-- <option value="">Seleccione</option> -->
                                 <!-- Las marcas se cargarán dinámicamente aquí -->
@@ -43,12 +50,15 @@
                     </div>
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="costProduct" class="form-label">Costo Neto del Producto: <span class="text-danger">(*)</span></label>
-                            <input class="form-control" type="number" name="costProduct" id="costProduct" required>
+                            <label for="costProduct" class="form-label">Costo Neto del Producto: <span
+                                    class="text-danger">(*)</span></label>
+                            <input class="form-control" type="number" name="costProduct" id="costProduct"
+                                oninput="onlyNumbersDot(this)" required>
                         </div>
                         <div class="w-100">
                             <label for="quantityProduct" class="form-label">Cantidad Existente del Producto: </label>
-                            <input class="form-control" type="number" name="quantityProduct" id="quantityProduct" required>
+                            <input class="form-control" type="number" name="quantityProduct"
+                                oninput="onlyNumbersDot(this)" id="quantityProduct" required>
                         </div>
                     </div>
                     <br>
@@ -66,8 +76,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" id="nuevoProductoRegistro">Guardar</button>
-                    <button type="button" class="btn btn-success" id="successNewProduct" style="display:none;" disabled><span
-                            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <button type="button" class="btn btn-success" id="successNewProduct" style="display:none;"
+                        disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Cargando...</button>
                 </div>
             </form>
@@ -76,7 +86,17 @@
 </div>
 
 <script>
-    $(document).ready(function() {
+    function onlyNumbersDot(input) {
+        const regex = /^\d+(\.\d{0,2})?$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.slice(0, -1);
+        }
+    }
+
+    $(document).ready(function () {
+
+
+
         const categorySelect = new TomSelect("#categoryBrand", {
             allowEmptyOption: true,
             create: false,
@@ -91,7 +111,7 @@
 
         brandSelect.clear();
         // Evento cuando se cambia la categoría
-        $("#categoryBrand").change(function() {
+        $("#categoryBrand").change(function () {
             const categoryId = $(this).val();
 
             // Verifica que se haya seleccionado una categoría válida
@@ -104,7 +124,7 @@
                         action: "getBrandsByCategory", // Acción que se manejará en el backend
                         idCategory: categoryId
                     },
-                    success: function(response) {
+                    success: function (response) {
                         try {
                             const brands = JSON.parse(response);
                             brandSelect.clearOptions();
@@ -130,7 +150,7 @@
                             alert("Hubo un error al cargar las marcas.");
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error("Error en la solicitud AJAX: ", error);
                     }
                 });
@@ -147,25 +167,25 @@
     });
 
 
-    $("#nuevoProductoRegistro").click(function(e) {
+    $("#nuevoProductoRegistro").click(function (e) {
         e.preventDefault();
 
         let hasErrors = false;
         const fields = [{
-                id: "#nameProduct",
-            },
-            // {
-            //     id: "#categoryBrand",
-            // },
-            // {
-            //     id: "#brandProduct",
-            // },
-            // {
-            //     id: "#costProduct",
-            // },
-            {
-                id: "#statusProduct",
-            }
+            id: "#nameProduct",
+        },
+        {
+            id: "#categoryBrand",
+        },
+        // {
+        //     id: "#brandProduct",
+        // },
+        {
+            id: "#costProduct",
+        },
+        {
+            id: "#statusProduct",
+        }
         ];
 
         fields.forEach((field) => {
@@ -208,7 +228,7 @@
             data: formData,
             processData: false,
             contentType: false,
-            success: function(response) {
+            success: function (response) {
                 if (response == 1) {
                     $.toast({
                         heading: 'Finalizado',
@@ -227,7 +247,7 @@
                     console.error("Error: " + response);
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error AJAX: " + error);
             }
         });

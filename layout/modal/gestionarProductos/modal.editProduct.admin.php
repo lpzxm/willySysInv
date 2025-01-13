@@ -4,24 +4,30 @@
         <div class="modal-content">
             <div class="modal-header bg-warning text-white">
                 <h5 class="modal-title" id="editProductModalLabel">Editar Producto - <span id="name"></span></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="closeModaleditProduct"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    id="closeModaleditProduct"></button>
             </div>
             <form>
                 <div class="modal-body">
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="editnameProduct" class="form-label">Nombre del producto<span class="text-danger">(*)</span></label>
-                            <textarea class="form-control" name="editnameProduct" id="editnameProduct" cols="10" rows="2" style="resize: none;" required></textarea>
+                            <label for="editnameProduct" class="form-label">Nombre del producto<span
+                                    class="text-danger">(*)</span></label>
+                            <textarea class="form-control" name="editnameProduct" id="editnameProduct" cols="10"
+                                rows="2" style="resize: none;" required></textarea>
                         </div>
                         <div class="w-100">
                             <label for="editdescProduct" class="form-label">Descripción del producto:</label>
-                            <textarea class="form-control" name="editdescProduct" id="editdescProduct" cols="10" rows="2" style="resize: none;" required></textarea>
+                            <textarea class="form-control" name="editdescProduct" id="editdescProduct" cols="10"
+                                rows="2" style="resize: none;" required></textarea>
                         </div>
                     </div>
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="editcategoryBrand" class="form-label">Categoria a la que pertenece: <span class="text-danger">(*)</span></label>
-                            <select class="form-select select-example" name="editcategoryBrand" id="editcategoryBrand" required>
+                            <label for="editcategoryBrand" class="form-label">Categoria a la que pertenece: <span
+                                    class="text-danger">(*)</span></label>
+                            <select class="form-select select-example" name="editcategoryBrand" id="editcategoryBrand"
+                                required>
                                 <option value="">Seleccione</option>
                                 <?php
                                 $queryCategories = "SELECT * FROM product_category WHERE status = 1;";
@@ -34,7 +40,9 @@
                             </select>
                         </div>
                         <div class="w-100">
-                            <label for="editbrandProduct" class="form-label">Marca del producto: <span class="text-danger">(*)</span><span class="text-success" id="editsuccessBrand"></span></label>
+                            <label for="editbrandProduct" class="form-label">Marca del producto: <span
+                                    class="text-danger">(*)</span><span class="text-success"
+                                    id="editsuccessBrand"></span></label>
                             <select class="form-select select-example2" id="editbrandProduct" required>
                                 <!-- <option value="">Seleccione</option> -->
                                 <!-- Las marcas se cargarán dinámicamente aquí -->
@@ -43,19 +51,24 @@
                     </div>
                     <div class="mb-3 d-flex col">
                         <div class="w-100 me-2">
-                            <label for="editcostProduct" class="form-label">Costo Neto del Producto: <span class="text-danger">(*)</span></label>
-                            <input class="form-control" type="number" name="editcostProduct" id="editcostProduct" required>
+                            <label for="editcostProduct" class="form-label">Costo Neto del Producto: <span
+                                    class="text-danger">(*)</span></label>
+                            <input class="form-control" type="number" name="editcostProduct" id="editcostProduct"
+                                oninput="onlyNumbersDot(this)" required>
                         </div>
                         <div class="w-100">
-                            <label for="editquantityProduct" class="form-label">Cantidad Existente del Producto: </label>
-                            <input class="form-control" type="number" name="editquantityProduct" id="editquantityProduct" required>
+                            <label for="editquantityProduct" class="form-label">Cantidad Existente del Producto:
+                            </label>
+                            <input class="form-control" type="number" name="editquantityProduct"
+                                id="editquantityProduct" oninput="onlyNumbersDot(this)" required>
                         </div>
                     </div>
                     <br>
                     <hr>
                     <br>
                     <div class="mb-3">
-                        <label for="editstatusProduct" class="form-label">Estado<span class="text-danger">(*)</span></label>
+                        <label for="editstatusProduct" class="form-label">Estado<span
+                                class="text-danger">(*)</span></label>
                         <select class="form-select" id="editstatusProduct" required>
                             <option value="">Seleccione</option>
                             <option value="1">Activo</option>
@@ -67,8 +80,8 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     <button type="button" class="btn btn-success" id="editProductRegistro">Guardar</button>
-                    <button type="button" class="btn btn-success" id="successeditProduct" style="display:none;" disabled><span
-                            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <button type="button" class="btn btn-success" id="successeditProduct" style="display:none;"
+                        disabled><span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                         Cargando...</button>
                 </div>
             </form>
@@ -77,6 +90,13 @@
 </div>
 
 <script>
+    function onlyNumbersDot(input) {
+        const regex = /^\d+(\.\d{0,2})?$/;
+        if (!regex.test(input.value)) {
+            input.value = input.value.slice(0, -1);
+        };
+    };
+
     const categorySelect = new TomSelect("#editcategoryBrand", {
         allowEmptyOption: true,
         create: false,
@@ -89,7 +109,7 @@
         searchField: ['text'],
     });
 
-    $(document).on("click", ".editProductBtn", function() {
+    $(document).on("click", ".editProductBtn", function () {
         brandSelect.clear();
         categorySelect.clear();
 
@@ -120,7 +140,7 @@
                 process: "inventario_process",
                 action: "getCategories", // Cambia según tu backend
             },
-            success: function(response) {
+            success: function (response) {
                 try {
                     const categories = JSON.parse(response);
 
@@ -143,14 +163,14 @@
                     alert("Error al cargar las categorías.");
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Error en AJAX de categorías: ", error);
             }
         });
 
         $("#editProductModal").modal('show');
 
-        $("#editcategoryBrand").on("change", function() {
+        $("#editcategoryBrand").on("change", function () {
             const selectedCategoryId = $(this).val();
 
             // Limpiar el valor seleccionado previamente en marcas
@@ -175,7 +195,7 @@
                         action: "getBrandsByCategory", // Acción que se manejará en el backend
                         idCategory: categoryId
                     },
-                    success: function(response) {
+                    success: function (response) {
                         try {
                             const brands = JSON.parse(response);
 
@@ -203,7 +223,7 @@
                             alert("Error al cargar las marcas.");
                         }
                     },
-                    error: function(xhr, status, error) {
+                    error: function (xhr, status, error) {
                         console.error("Error en AJAX de marcas: ", error);
                     }
                 });
@@ -217,23 +237,23 @@
             }
         }
 
-        $("#editProductRegistro").off("click").on("click", function() {
+        $("#editProductRegistro").off("click").on("click", function () {
             let hasErrors = false;
             const fields = [{
-                    id: "#editnameProduct"
-                },
-                // {
-                //     id: "#editcategoryBrand"
-                // },
-                // {
-                //     id: "#editbrandProduct"
-                // },
-                // {
-                //     id: "#editcostProduct"
-                // },
-                {
-                    id: "#editstatusProduct"
-                }
+                id: "#editnameProduct"
+            },
+            {
+                id: "#editcategoryBrand"
+            },
+            // {
+            //     id: "#editbrandProduct"
+            // },
+            {
+                id: "#editcostProduct"
+            },
+            {
+                id: "#editstatusProduct"
+            }
             ];
 
             fields.forEach((field) => {
@@ -292,7 +312,7 @@
                 data: formData,
                 processData: false,
                 contentType: false,
-                success: function(response) {
+                success: function (response) {
                     if (response == 1) {
                         $.toast({
                             heading: 'Finalizado',
@@ -310,7 +330,7 @@
                         console.error("Error: " + response);
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("Error AJAX: " + error);
                 }
             });
