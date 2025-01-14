@@ -56,6 +56,8 @@
 ?>
 <?php include("./layout/modal/gestionarProductos/dataProductos/modal.addProductQuantity.admin.php");
 ?>
+<?php include("./layout/modal/gestionarProductos/dataProductos/modal.changeCostProduct.admin.php");
+?>
 
 <script>
     $(document).ready(function() {

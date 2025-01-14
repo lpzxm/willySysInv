@@ -35,7 +35,8 @@ $totalCantidad = 0;
                 <tr>
                     <td><?php echo htmlspecialchars($product['id']); ?></td>
                     <td><?= htmlspecialchars($product['name']); ?></td>
-                    <td><?= !empty($product['description']) ? htmlspecialchars($product['description']) : "<span class='text-info'>Sin Info</span>"; ?></td>
+                    <td><?= !empty($product['description']) ? htmlspecialchars($product['description']) : "<span class='text-info'>Sin Info</span>"; ?>
+                    </td>
                     <td>
                         <?php
 
@@ -70,8 +71,10 @@ $totalCantidad = 0;
 
                         ?>
                     </td>
-                    <td>$<?= !empty($product['net_cost']) ? number_format($product['net_cost'], 2) : "<span class='text-info'>Sin registro</span>"; ?></td>
-                    <td><?= !empty($product['quantity']) ? htmlspecialchars($product['quantity']) : "<span class='text-info'>Sin registro</span>"; ?></td>
+                    <td>$<?= !empty($product['net_cost']) ? number_format($product['net_cost'], 2) : "<span class='text-info'>Sin registro</span>"; ?>
+                    </td>
+                    <td><?= !empty($product['quantity']) ? htmlspecialchars($product['quantity']) : "<span class='text-info'>Sin registro</span>"; ?>
+                    </td>
                     <td><?= htmlspecialchars((new DateTime($product['date_register']))->format('d/m/y')); ?></td>
                     <td><?= ($product['status'] === 1) ? "Activo" : "<span class='text-secondary'>Inactivo</span>" ?></td>
                     <td>$
@@ -80,16 +83,31 @@ $totalCantidad = 0;
                         echo number_format($totalProducto, 2) ?>
                     </td>
                     <td class="d-flex col">
-                        <button class="btn btn-warning btn-sm me-2 editProductBtn" data-id="<?= $product['id']; ?>" data-name="<?= htmlspecialchars($product['name']); ?>" data-description="<?= $product['description']; ?>" data-category="<?= $product['id_category']; ?>" data-brand="<?= $product['id_brand']; ?>" data-cost="<?= number_format($product['net_cost'], 2); ?>" data-quantity="<?= $product['quantity']; ?>" data-status="<?= $product['status'] ?>">
+                        <button class="btn btn-success btn-sm me-3 changeCostProduct"
+                            data-id="<?= htmlspecialchars($product['id']); ?>"
+                            data-name="<?= htmlspecialchars($product['name']); ?>" data-cost="<?= $product['net_cost']; ?>">
+                            <i class="bi bi-currency-dollar"></i>
+                        </button>
+                        <button class="btn btn-warning btn-sm me-3 editProductBtn" data-id="<?= $product['id']; ?>"
+                            data-name="<?= htmlspecialchars($product['name']); ?>"
+                            data-description="<?= $product['description']; ?>" data-category="<?= $product['id_category']; ?>"
+                            data-brand="<?= $product['id_brand']; ?>" data-cost="<?= number_format($product['net_cost'], 2); ?>"
+                            data-quantity="<?= $product['quantity']; ?>" data-status="<?= $product['status'] ?>">
                             <i class="bi bi-pencil"></i>
                         </button>
-                        <button class="btn btn-success btn-sm me-2 addProductIncoming" data-id="<?= htmlspecialchars($product['id']); ?>" data-name="<?= htmlspecialchars($product['name']); ?>" data-quantity="<?= $product['quantity']; ?>">
+                        <button class="btn btn-success btn-sm me-3 addProductIncoming"
+                            data-id="<?= htmlspecialchars($product['id']); ?>"
+                            data-name="<?= htmlspecialchars($product['name']); ?>" data-quantity="<?= $product['quantity']; ?>">
                             <i class="bi bi-plus-lg"></i>
                         </button>
-                        <button class="btn btn-danger btn-sm me-2 addProductSale" data-id="<?= htmlspecialchars($product['id']); ?>" data-name="<?= htmlspecialchars($product['name']); ?>" data-quantity="<?= $product['quantity']; ?>">
+                        <button class="btn btn-danger btn-sm me-3 addProductSale"
+                            data-id="<?= htmlspecialchars($product['id']); ?>"
+                            data-name="<?= htmlspecialchars($product['name']); ?>" data-quantity="<?= $product['quantity']; ?>">
                             <i class="bi bi-dash-lg"></i>
                         </button>
-                        <button class="btn btn-secondary btn-sm changeStatusProduct" data-id="<?= htmlspecialchars($product['id']); ?>" data-status="<?= ($product['status'] === 1) ? "Inactivo" : "Activo" ?>">
+                        <button class="btn btn-secondary btn-sm changeStatusProduct"
+                            data-id="<?= htmlspecialchars($product['id']); ?>"
+                            data-status="<?= ($product['status'] === 1) ? "Inactivo" : "Activo" ?>">
                             <i class="bi bi-eye-fill"></i>
                         </button>
                     </td>
@@ -110,7 +128,7 @@ $totalCantidad = 0;
 <span><b><?php echo "Total de cantidad de Registros de Productos sin cantidad: " . $count ?></b></span>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#tablaProductosCost').DataTable();
     })
 </script>

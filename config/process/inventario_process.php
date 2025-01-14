@@ -484,6 +484,28 @@ else if ($action == 'getBrandsByCategory') {
         echo "Error :" . $e->getMessage();
     }
 }
+//editar costo de producto
+else if ($action == 'changeProductCost') {
+    try {
+        $productId = isset($_POST['productId']) ? intval($_POST['productId']) : null;
+        $newCost = isset($_POST['newCost']) ? $_POST['newCost'] : null;
+
+        if ($productId === null || $newCost === null || $newCost <= 0) {
+            echo 0;
+            exit;
+        }
+        $query = "UPDATE products SET net_cost = :newCost WHERE id = :productId";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':newCost', $newCost, PDO::PARAM_STR);
+        $stmt->bindParam(':productId', $productId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        echo 1;
+
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
 //sumar productos
 else if ($action == 'addProductQuantity') {
     try {
