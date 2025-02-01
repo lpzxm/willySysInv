@@ -17,6 +17,6 @@ if ($view == '') {
     include("./views/admin/categories/view.categories.admin.php");
 } else if ($view == 'main/gestionarMarcas' && $logged) {
     include("./views/admin/brands/view.brands.admin.php");
-} elseif ($view == 'main/estadisticasGenerales' && $logged) {
+} else if ($view == 'main/estadisticasGenerales' && $logged) {
     include("./views/view.statsGeneral.php");
 }
